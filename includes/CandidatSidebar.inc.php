@@ -6,15 +6,15 @@
 	<!-- Nav -->
 		<nav id="nav">
 			<ul>
-				<li><a href="candidat.php">Accueil</a></li>
-				<li><a href="activites.php">Activités</a></li>
-				<li><a href="monHistorique.php">Mon Historique</a></li>
-				<li><a href="actualite.php">Actualités</a></li>
-				<li><a href="butExperience.php">But de l'expérience</a></li>
-				<li><a href="aide.php">Aide</a></li>
-				<li><a href="monCompte">Mon Compte</a></li>
+				<li><a href="../controleur/candidatAccueil.ctrl.php">Accueil</a></li>
+				<li><a href="../controleur/candidatActivites.ctrl.php">Activités</a></li>
+				<li><a href="../controleur/candidatMonHistorique.ctrl.php">Mon Historique</a></li>
+				<li><a href="../controleur/candidatActualite.ctrl.php">Actualités</a></li>
+				<li><a href="../controleur/candidatButExperience.ctrl.php">But de l'expérience</a></li>
+				<li><a href="../controleur/candidatAide.ctrl.php">Aide</a></li>
+				<li><a href="../controleur/candidatMonCompte.ctrl.php">Mon Compte</a></li>
 				<!-- LogOut -->
-				<li><a href="logout.php">Déconnexion</a></li>
+				<li><a href="../controleur/logout.php">Déconnexion</a></li>
 			</ul>
 		</nav>
 

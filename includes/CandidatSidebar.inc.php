@@ -1,7 +1,7 @@
 <div id="sidebar">
 
 	<!-- Logo -->
-		<h1 id="logo"><a href="index.html">Candidat</a></h1>
+		<h1 id="logo"><a href="candidatAccueil.ctrl.php">Candidat</a></h1>
 
 	<!-- Nav -->
 		<nav id="nav">

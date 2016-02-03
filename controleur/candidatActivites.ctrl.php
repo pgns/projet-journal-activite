@@ -3,7 +3,7 @@
 
 
 	require_once('../includes/head.inc.php');
-	require_once('../vue/candidatActivite.vue.php');
+	require_once('../vue/candidatActivites.vue.php');
 	require_once('../includes/CandidatSidebar.inc.php');
 	require_once('../includes/footer.inc.php');
 ?>

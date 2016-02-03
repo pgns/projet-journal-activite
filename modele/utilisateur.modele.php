@@ -5,6 +5,11 @@
 		$requete->execute();
 
 		$resultat = $requete->fetch();
+		if($resultat != false){
+			$resultat = new Utilisateur($resultat);
+		}else{
+			$resultat = "";
+		}
 		return $resultat;
 	}
 ?>

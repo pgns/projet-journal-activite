@@ -14,7 +14,7 @@
 				<li><a href="../controleur/candidatAide.ctrl.php">Aide</a></li>
 				<li><a href="../controleur/candidatMonCompte.ctrl.php">Mon Compte</a></li>
 				<!-- LogOut -->
-				<li><a href="../controleur/logout.php">Déconnexion</a></li>
+				<li><a href="../controleur/logout.ctrl.php">Déconnexion</a></li>
 			</ul>
 		</nav>
 

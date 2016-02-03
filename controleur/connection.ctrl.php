@@ -1,6 +1,6 @@
-<?php foreach($_POST as $key=>$value){$$key=$value;}?>
-<?php foreach($_GET as $key=>$value){$$key=$value;}?>
-<?php
+<?php foreach($_POST as $key=>$value){$$key=$value;}
+	  foreach($_GET as $key=>$value){$$key=$value;}
+
 	
 	require '../includes/connection_MYSQL.inc.php';
 	require '../class/utilisateur.class.php';

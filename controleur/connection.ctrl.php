@@ -14,8 +14,17 @@
 			session_start();
 			$_SESSION['id']=$user->ID;
 			$_SESSION['pseudo']=$user->Login;
-			header('Location: candidatAccueil.ctrl.php');
-  			exit();
+			if ($user->TypeUser == "chercheur") {
+				header('Location: chercheurAccueil.ctrl.php');
+				exit();
+			}
+			elseif ($user->TypeUser == "candidat") {
+				header('Location: candidatAccueil.ctrl.php');
+				exit();
+			}
+			else {
+				$reponse="Erreur : type d'utilisateur inconnu, les types d'utilisateur reconus de la bdd sont \"chercheur\" et \"candidat\" l'admin n'est pas encore implémenté";
+			}
 		}
 		else{
 			$reponse="Erreur : login ou mots de passe invalide";

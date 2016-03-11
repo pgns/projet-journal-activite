@@ -26,3 +26,8 @@
 		-présentation : 
 			-centrée les items et prévoir affichage multi taille
 			-skin bouton add
+		-code :
+				//Question : les fonctions requette sur la liste d'activité on t'elle été faite
+			afficher les activité déjà effectuer.
+			creer un page d'enregistrement/traitement d'une activité.
+			modif la page modale pour coller au modèle d'enregistrement des données.

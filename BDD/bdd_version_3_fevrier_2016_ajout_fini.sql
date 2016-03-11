@@ -154,9 +154,9 @@ CREATE TABLE IF NOT EXISTS `administrateur` (
 --
 
 CREATE TABLE IF NOT EXISTS `candidat` (
-  `CodeSujet` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `CodeCandidat` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Age` int(11) NOT NULL COMMENT 'pas plustot anné de naissance',
-  `GenreSujet` varchar(250) NOT NULL,
+  `GenreCandidat` varchar(250) NOT NULL,
   `LieuxEtude` varchar(250) NOT NULL,
   `NiveauEtude` varchar(250) NOT NULL,
   `DiplomePrep` varchar(250) NOT NULL,

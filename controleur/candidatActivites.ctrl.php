@@ -2,17 +2,34 @@
 	  foreach($_GET as $key=>$value){$$key=$value;}
 
 	$SemaineCourante = date("W");
-	$Semaine = $_POST['semaine'];
+	if(isset($_POST['semaine']))
+		$Semaine = $_POST['semaine'];
+	else
+	$Semaine=null;	
 	
 	function SemaineCourante ($SemaineCourante,$Semaine) {
 		if ($Semaine == NULL)
-			return $_SESSION['semaine'] ;
+			return $SemaineCourante ;
 		else
 			return $Semaine ;
 	}
 
-	$Week = SemaineCourante ((date("W")), $_POST['semaine']) ;
+	$Week = SemaineCourante ((date("W")), $Semaine) ;
 	
+	
+	function convertNumToDay($j){
+		switch ($j) {
+			case 0 : $text = "Lundi" ;		break;
+			case 1 : $text = "Mardi" ;		break;
+			case 2 : $text = "Mercredi" ;	break;
+			case 3 : $text = "Jeudi" ;		break;
+			case 4 : $text = "Vendredi" ;	break;
+			case 5 : $text = "Samedi" ;		break;
+			case 6 : $text = "Dimanche" ;	break;
+			default: $text = "Lundi" ;		break;
+		}
+	return $text;
+}	
 	
 	function print_current_date () {
 		$j = date ("w") ;
@@ -110,7 +127,7 @@
 		}
 		echo '</tr><tr>';
 		foreach($week as $key => $value){
-			echo'<td id='.$key.'></td>';
+			echo'<td id='.convertNumToDay($key).'><input type="button" name="'.convertNumToDay($key).'" value="ajouter activitée" onclick=""></td>';
 		}
 		echo'</tr>';
 		echo'</table>';

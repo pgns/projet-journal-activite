@@ -1,0 +1,18 @@
+//TODO List des bug trouvés mais pas encores corrigés:
+
+- interface candidat :
+	- quand on minimise la fenetre, l'encadré blanc sur lequel le contenue
+	de la partie candidatBlaBLA.vue est disposé ne vas pas jusque en bas de
+	la page.
+
+
+
+
+
+
+//TODO List des choses a vérifiés :
+
+- partie candidat:
+	- partie activité :
+		- dois ton laisser les fonction dans la partie controleur ou faire
+		un fichier toolbox associé ?

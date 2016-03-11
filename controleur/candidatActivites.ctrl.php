@@ -8,6 +8,7 @@
 	$Semaine=null;	
 	
 	function SemaineCourante ($SemaineCourante,$Semaine) {
+		//fonction de choix entre un affichage par défault et le retour du post.
 		if ($Semaine == NULL)
 			return $SemaineCourante ;
 		else
@@ -15,9 +16,9 @@
 	}
 
 	$Week = SemaineCourante ((date("W")), $Semaine) ;
-	
-	
+		
 	function convertNumToDay($j){
+		//fonction de conversion perso
 		switch ($j) {
 			case 0 : $text = "Lundi" ;		break;
 			case 1 : $text = "Mardi" ;		break;
@@ -32,6 +33,7 @@
 }	
 	
 	function print_current_date () {
+		//renvoie la date du jours courant.
 		$j = date ("w") ;
 		switch ($j) {
 			case 1 : $text = "Lundi" ;		break;
@@ -64,6 +66,8 @@
 	}
 	
 	function get_date_lundi_to_Sunday_from_week ($week,$year,$format="d/m/Y") {
+		//renvoie un tableau des jours de la semaine et des dates associées en fonction du
+		//numero de semaine et de l'année.
 		$firstDayInYear = date ("N",mktime(0,0,0,1,1,$year)) ;
 		if ($firstDayInYear < 5)
 			$shift =- ($firstDayInYear-1) * 86400 ;
@@ -91,33 +95,33 @@
 		) ;
 	}
 	
-	function ConvertNumSemaineToDate($W,$Y)
+	function ConvertNumSemaineToDateDebEtFin($W,$Y)
 	{
+		//renvoie la date de début et fin de semaine en fonction du numéro de semaine et de l'année.
 		$debut_fin_semaine = get_date_lundi_to_Sunday_from_week($W,$Y);
 		return "Semaine du ".$debut_fin_semaine[0] . " au " . $debut_fin_semaine [6];
 	}
 
 	function genererChoixSemaine($W,$Y)
 	{
+		//propose toutes les semaines du début de l'année a la semaine courante
 		echo'<center><form action="candidatActivites.ctrl.php" method="POST">
 		<fieldset>
-		<SELECT name="semaine">';
-		for($i=1;$i<=52;$i++)
+		<SELECT name="semaine" onchange="this.form.submit()">';
+		for($i=1;$i<=date("W");$i++)
 		{
 			if($i==$W)
 			{
-				echo'<OPTION value="'.$i.'" selected><center>'.ConvertNumSemaineToDate($i,$Y).'</center></OPTION>';
+				echo'<OPTION value="'.$i.'" selected><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
 			}
 			else
-				echo'<OPTION value="'.$i.'" ><center>'.ConvertNumSemaineToDate($i,$Y).'</center></OPTION>';
+				echo'<OPTION value="'.$i.'" ><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
 		}
 		echo'</SELECT>
 		</fieldset>
-		<input type="Submit" nom="Valider" value="Afficher">
 		</form></center>';
 	}
 
-	
 	
 	function print_table($week){
 		echo '<table style="width:100%">';

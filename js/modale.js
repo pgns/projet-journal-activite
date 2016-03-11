@@ -58,7 +58,7 @@ $(document).ready(function() {
 
 function showModal(J){
    var id = '#modal';
-   $(id).html('Activités du '+J+'<br/><a href="#" class="close">Fermer la fenetre</a>');
+   $(id).html('ajouter une activité '+J+'<br/><a href="#" class="close">Fermer la fenetre</a>');
    
    // On definit la taille de la fenetre modale
    resizeModal();

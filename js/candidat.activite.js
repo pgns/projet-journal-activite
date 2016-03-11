@@ -15,4 +15,4 @@
 
 //print_table();
 
-document.getElementById('Lundi').innerHTML = 'toto';
+//document.getElementById('Lundi').innerHTML = 'toto';

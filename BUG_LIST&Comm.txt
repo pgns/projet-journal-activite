@@ -1,4 +1,4 @@
-//TODO List des bug trouvés mais pas encores corrigés:
+//TODO Liste des bug trouvés mais pas encores corrigés:
 
 - interface candidat :
 	- quand on minimise la fenetre, l'encadré blanc sur lequel le contenue
@@ -10,9 +10,19 @@
 
 
 
-//TODO List des choses a vérifiés :
+//TODO Liste des choses a vérifiés :
 
 - partie candidat:
 	- partie activité :
 		- dois ton laisser les fonction dans la partie controleur ou faire
 		un fichier toolbox associé ?
+
+
+
+//TODO Liste des choses pas terminée mais commencées :
+
+-partie candidat:
+	- partie activité:
+		-présentation : 
+			-centrée les items et prévoir affichage multi taille
+			-skin bouton add

@@ -7,7 +7,7 @@
 		<center>
 			<a><h1>Mes activités</h1></a>
 			<?PHP 
-				print_current_date();
+				genererChoixSemaine($Week,date("Y"));
 			?>
 			<div id="table">
 			<?php

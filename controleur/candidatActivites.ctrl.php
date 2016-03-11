@@ -1,6 +1,18 @@
 <?php foreach($_POST as $key=>$value){$$key=$value;}
 	  foreach($_GET as $key=>$value){$$key=$value;}
 
+	$SemaineCourante = date("W");
+	$Semaine = $_POST['semaine'];
+	
+	function SemaineCourante ($SemaineCourante,$Semaine) {
+		if ($Semaine == NULL)
+			return $_SESSION['semaine'] ;
+		else
+			return $Semaine ;
+	}
+
+	$Week = SemaineCourante ((date("W")), $_POST['semaine']) ;
+	
 	
 	function print_current_date () {
 		$j = date ("w") ;
@@ -62,6 +74,34 @@
 		) ;
 	}
 	
+	function ConvertNumSemaineToDate($W,$Y)
+	{
+		$debut_fin_semaine = get_date_lundi_to_Sunday_from_week($W,$Y);
+		return "Semaine du ".$debut_fin_semaine[0] . " au " . $debut_fin_semaine [6];
+	}
+
+	function genererChoixSemaine($W,$Y)
+	{
+		echo'<center><form action="candidatActivites.ctrl.php" method="POST">
+		<fieldset>
+		<SELECT name="semaine">';
+		for($i=1;$i<=52;$i++)
+		{
+			if($i==$W)
+			{
+				echo'<OPTION value="'.$i.'" selected><center>'.ConvertNumSemaineToDate($i,$Y).'</center></OPTION>';
+			}
+			else
+				echo'<OPTION value="'.$i.'" ><center>'.ConvertNumSemaineToDate($i,$Y).'</center></OPTION>';
+		}
+		echo'</SELECT>
+		</fieldset>
+		<input type="Submit" nom="Valider" value="Afficher">
+		</form></center>';
+	}
+
+	
+	
 	function print_table($week){
 		echo '<table style="width:100%">';
 		echo '<tr>';
@@ -77,7 +117,7 @@
 	}
 	
 	
-	$currentWeek = get_date_lundi_to_Sunday_from_week(date("W"),date("Y"));
+	$currentWeek = get_date_lundi_to_Sunday_from_week($Week,date("Y"));
 
 	require_once('../includes/head.candidat.php');
 	require_once('../vue/candidatActivites.vue.php');			

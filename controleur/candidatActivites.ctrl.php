@@ -61,8 +61,25 @@
 					"Dimanche ".date($format,$timestamp_dimanche)		
 		) ;
 	}
+	
+	function print_table($week){
+		echo '<table style="width:100%">';
+		echo '<tr>';
+		foreach($week as $key => $value){
+			echo '<td><center>'.$value.'</center></td>';
+		}
+		echo '</tr><tr>';
+		foreach($week as $key => $value){
+			echo'<td id='.$key.'></td>';
+		}
+		echo'</tr>';
+		echo'</table>';
+	}
+	
+	
+	$currentWeek = get_date_lundi_to_Sunday_from_week(date("W"),date("Y"));
 
-	require_once('../includes/head.inc.php');
+	require_once('../includes/head.candidat.php');
 	require_once('../vue/candidatActivites.vue.php');			
 	require_once('../includes/CandidatSidebar.inc.php');
 	require_once('../includes/footer.inc.php');

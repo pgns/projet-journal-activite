@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 	class Categorie{
 		public $listeLieu;
 		
@@ -13,28 +12,11 @@
 			}
 		}
 		
-=======
-	class CategorieActivite{
-		public function __construct(array $categorieActivite)
-		{
-			if(!empty($categorieActivite))
-				$this->hydrate($categorieActivite);
-		}
-		public function hydrate(array $donnees)
-		{
-			foreach($donnees as $key => $value)
-			{	
-				$this->$key = $value;
-			}
-		}
-
->>>>>>> e62c54b159c51b1fb7fd0b11f2be86d1bb91f89c
 		public function __get($name)
 		{
 			if (isset($this->$name))
 				return $this->$name;
 		}
-<<<<<<< HEAD
 		
 		/* Renvoie le tableau de la liste des catégories d'activités en html*/
 		public function tableauCategorie(){
@@ -54,12 +36,6 @@
 			}
 			$resultat.="</select>";
 			return $resultat;
-=======
-
-		public function __set($name, $value)
-		{
-			$this->$name = $value;
->>>>>>> e62c54b159c51b1fb7fd0b11f2be86d1bb91f89c
 		}
 	}
 ?>

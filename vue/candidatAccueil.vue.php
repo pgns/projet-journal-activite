@@ -5,7 +5,7 @@
 		Insert content here			
 		-->		
 		<center>
-			<h1>Bienvennue Phillipe</h1>
+			<h1>Bienvennue <?php echo $_SESSION['pseudo']; ?></h1>
 
 		</center>
 	</div>

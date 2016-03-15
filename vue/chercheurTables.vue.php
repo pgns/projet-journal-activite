@@ -110,7 +110,7 @@ $(document).ready(function(){
 		<h2>La liste des catégories d'activités</h2>
 		<a href="#" id="afficherCat">Afficher la liste des catégories d'activités</a><br/>
 		<section class="allAfficheListe" id ="afficheCat">
-			<?php echo $listeCategorie->tableauCategorie()?>
+			<?php echo tableauCategorie($bdd);?>
 		</section>
 		<a href="#" id="modCat">Modifier la liste des catégories d'activités</a><br/>
 		<section id="modifCat" class="allModdifListe">
@@ -126,13 +126,13 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier une catégorie d'activité:</legend>
 						<label>Sélectionez une catégorie d'activité: </label>
-						<?php echo $listeCategorie->selectCategorie("categorieActivite","name");?>
+						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
 						<input type="submit" value="Modifier"><br/>
 				</fieldset>
 				<fieldset>
 					<legend>Supprimer une catégorie d'activité:</legend>
 						<label>Sélectionez une catégorie d'activité:  </label>
-						<?php echo $listeCategorie->selectCategorie("categorieActivite","name");?>
+						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
 						<input type="submit" value="Supprimer">
 				</fieldset>		
 			</form>
@@ -152,7 +152,7 @@ $(document).ready(function(){
 						<label>ID de l'activité:</label>
 						<input type="number"/><br/>
 						<label>Sélectionez une catégorie pour l'activité: </label>
-						<?php echo $listeCategorie->selectCategorie("categorieActivite","name");?>
+						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
 						<input type="submit" value="Ajouter">
 				</fieldset>
 				<fieldset>

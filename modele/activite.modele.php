@@ -19,7 +19,6 @@
 				$cat = $data['CodeCategorie'];
 				$requete2 = $bdd->query("SELECT * FROM categorieactivite WHERE CodeCategorieActivite = $cat");
 				$data2 = $requete2->fetch();
-				$requete = $bdd->query("SELECT * FROM activite");
 				$resultat.="<tr><td>".$data['CodeActivite']."</td><td>".$data['NomActivite']."</td><td>".$data['DescriptifActivite']."</td><td>".$data['CodeCategorie']."(".$data2['NomCategorie'].")</td></tr>\n";
 				$requete2->closeCursor();
 		}

@@ -13,7 +13,7 @@
 		}
 		
 		/* Renvoie un select avec la liste des catégories d'activités */
-		public function selectCategorie($bdd,$id,$name){
+		function selectCategorie($bdd,$id,$name){
 			$resultat = "<select name=\"$name\" id=\"$id\">\n";
 			$requete = $bdd->query("SELECT * FROM categorieactivite");
 			while ($data = $requete->fetch()){

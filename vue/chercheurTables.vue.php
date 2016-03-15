@@ -173,10 +173,7 @@ $(document).ready(function(){
 		<h2>La liste des dispositifs</h2>
 		<a href="#" id="afficherDisp">Afficher la liste des dispositifs</a><br/>
 		<section class="allAfficheListe" id ="afficheDisp">
-			<?php echo $listeDispositif->tableauDispositif()?>
-		</section>
-		<section class="allAfficheListe" id ="afficheDisp">
-			<?php echo $listeDispositif->tableauDispositif()?>
+			<?php echo tableauDispositif($bdd)?>
 		</section>
 		<a href="#" id="modDisp">Modifier la liste des dispositifs</a><br/>
 		<section id="modifDisp" class="allModdifListe">
@@ -192,13 +189,13 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier un dispositif:</legend>
 						<label>Sélectionez un dispositif: </label>
-						<?php echo $listeDispositif->selectDispositif("iddisp","name");?>
+						<?php echo selectDispositif($bdd,"iddisp","name");?>
 						<input type="submit" value="Modifier"><br/>
 				</fieldset>
 				<fieldset>
 					<legend>Supprimer un dispositif:</legend>
 						<label>Sélectionez un dispositif:  </label>
-						<?php echo $listeDispositif->selectDispositif("iddisp2","name");?>
+						<?php echo selectDispositif($bdd,"iddisp2","name");?>
 						<input type="submit" value="Supprimer">
 				</fieldset>		
 			</form>
@@ -206,7 +203,7 @@ $(document).ready(function(){
 		<h2>La liste des lieux et des transports</h2>
 		<a href="#" id="afficherLieu">Afficher la liste des lieux et des transports</a><br/>
 		<section id="afficheLieu" class="allAfficheListe">
-			<?php echo $listeLieu->tableauLieu()?>
+			<?php echo tableauLieu($bdd)?>
 		</section>
 		<a href="#" id="modLieu">Modifier la liste des lieux et des transports</a><br/>
 		<section id="modifLieu" class="allModdifListe">
@@ -222,14 +219,14 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier un lieu & transport:</legend>
 						<label>Sélectionez un lieu: </label>
-						<?php echo $listeLieu->selectLieu("modiferLieu","listeLieu");?>
+						<?php echo selectLieu($bdd,"modiferLieu","listeLieu");?>
 						<div id="modifierLeLieu"></div>
 						<input type="submit" value="Modifier"><br/>
 				</fieldset>
 				<fieldset>
 					<legend>Supprimer un lieu & transport:</legend>
 						<label>Sélectionez un lieu:  </label>
-						<?php echo $listeLieu->selectLieu("supprLieu","listeLieu");?>
+						<?php echo selectLieu($bdd,"supprLieu","listeLieu");?>
 						<input type="submit" value="Supprimer">
 				</fieldset>		
 			</form>

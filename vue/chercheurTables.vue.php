@@ -140,7 +140,7 @@ $(document).ready(function(){
 		<h2>La liste des activités</h2>
 		<a href="#" id="afficherAct">Afficher la liste des activités</a><br/>
 		<section class="allAfficheListe" id ="afficheAct">
-			<?php echo $listeActivite->tableauActivite()?>
+			<?php echo tableauActivite($bdd); ?>
 		</section>
 		<a href="#" id="modAct">Modifier la liste des activités</a><br/>
 		<section id="modifAct" class="allModdifListe">
@@ -158,13 +158,13 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier une activité:</legend>
 						<label>Sélectionez une activité: </label>
-						<?php echo $listeActivite->selectActivite("id","name");?>
+						<?php echo selectActivite($bdd,"idmodi","name");?>
 						<input type="submit" value="Modifier"><br/>
 				</fieldset>
 				<fieldset>
 					<legend>Supprimer une activité:</legend>
 						<label>Sélectionez une activité:  </label>
-						<?php echo $listeActivite->selectActivite("id","name");?>
+						<?php echo selectActivite($bdd,"idmod","name");?>
 						<input type="submit" value="Supprimer">
 				</fieldset>		
 			</form>

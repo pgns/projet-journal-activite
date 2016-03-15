@@ -3,12 +3,11 @@
 
 	require '../includes/connection_MYSQL.inc.php';
 	require '../class/lieu.class.php';
-	require '../class/activite.class.php';
+	require '../modele/activite.modele.php';
 	require '../class/categorieActivite.class.php';
 	require '../class/dispositif.class.php';
 	
 	$listeLieu = new Lieu($bdd);
-	$listeActivite = new Activite($bdd);
 	$listeCategorie = new Categorie($bdd);
 	$listeDispositif = new Dispositif($bdd);
 	//$listeLieu->tableauLieu();

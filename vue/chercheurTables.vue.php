@@ -4,6 +4,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+	 $("#categorieModifierActivite").change(function(){
+		$("#modif_cat").html("<label>ID de la catégorie:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom de la catégorie:</label><input type=\"text\" value=\""+$("#categorieModifierActivite option:selected").text()+"\" name=\"nom_categorie\">");
+     });
+	
+	
+	
     $("#modLieu").click(function(event){
 		event.preventDefault();
         $("#modifLieu").slideToggle();
@@ -101,6 +107,74 @@ $(document).ready(function(){
 
 </script>
 	<div class="inner">
+	<?php
+	function test_input($data) {
+	  $data = trim($data);
+	  $data = stripslashes($data);
+	  $data = htmlspecialchars($data);
+	  return $data;
+	}
+	
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$msg ="";
+		if (! empty($_POST)){
+			var_dump($_POST);
+			if (isset($_POST['add_categorie'])){
+				if (empty($_POST['nom_categorie']) || empty($_POST['num_categorie'])){
+					$msg = "<div class=\"msg_alert\">Le nom de la catégorie et le numéro de la catégorie doivent etre remplis!</div>";
+				}
+				else{
+					$nom_categorie = test_input($_POST['nom_categorie']);
+					$num_categorie = test_input($_POST['num_categorie']);
+					/*--- On véréfie si le numéro de la catégorie est déjà présent----*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM categorieactivite WHERE CodeCategorieActivite = $num_categorie");
+					$data = $requete->fetch();
+					if($data['num']!= 0)
+						$msg = "<div class=\"msg_alert\">Le numéro de la catégorie est déjà présente dans la base de données!</div>";
+					else {
+					/*--- On insère la catégorie dans la bdd*/
+						$req = $bdd->prepare("INSERT INTO categorieactivite (CodeCategorieActivite,NomCategorie) VALUES (:CodeCategorieActivite, :NomCategorie)");
+						$req->execute(array(
+						'CodeCategorieActivite' => $num_categorie,
+						'NomCategorie' => $nom_categorie,
+						));
+						$msg = "<div class=\"msg_confirm\">La catégorie '$nom_categorie' a bien été rajouté avec le numéro '$num_categorie'</div>";
+					}
+				}
+			}
+			elseif(isset($_POST['sup_categorie'])){
+				if (empty($_POST['code_categorie'])){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner une catégorie!</div>";
+				}
+				else{	
+					$num_categorie = test_input($_POST['code_categorie']);
+					/*--- On véréfie si il y a des activités affecté à cette catégorie---*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM activite WHERE CodeCategorie = $num_categorie");
+					$data = $requete->fetch();
+					if($data['num']!= 0){
+						$requete = $bdd->query("SELECT * FROM activite WHERE CodeCategorie = $num_categorie");
+						if($data['num']== 1)
+							$msg ="<div class=\"msg_alert\">Impossible de supprimer la catégorie l'activités suivante est affectée à la catégorie: ";
+						else
+							$msg ="<div class=\"msg_alert\">Impossible de supprimer la catégorie les activités suivantes sont affectées à la catégorie: ";
+						while ($data = $requete->fetch()){
+							$msg.="<br/>".$data['CodeActivite']."  ".$data['NomActivite'];
+						}
+						$msg.="<br/>Veuillez affecter les activités à une autre catégorie.</div>";
+					}
+					else {
+						$req = $bdd->prepare("DELETE FROM categorieactivite WHERE CodeCategorieActivite = :CodeCategorieActivite");
+						$req->execute(array(
+							'CodeCategorieActivite' => $num_categorie,
+						));
+						$msg = "<div class=\"msg_confirm\">La catégorie a bien été supprimé</div>";
+					}
+				}
+			}
+		}
+		echo $msg;
+	}
+	?>
 		<!--
 		Insert content here			
 		-->		
@@ -114,26 +188,32 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modCat">Modifier la liste des catégories d'activités</a><br/>
 		<section id="modifCat" class="allModdifListe">
-			<form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter une catégorie d'activité:</legend>
 						<label>Nom de la catégorie: </label>
-						<input type="text"/>
+						<input type="text" name="nom_categorie" required/>
 						<label>ID de la catégorie:</label>
-						<input type="number"/><br/>
-						<input type="submit" value="Ajouter">
+						<input type="number" name="num_categorie" required/><br/>
+						<input type="submit" name="add_categorie" value="Ajouter">
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier une catégorie d'activité:</legend>
 						<label>Sélectionez une catégorie d'activité: </label>
-						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
-						<input type="submit" value="Modifier"><br/>
+						<?php echo selectCategorie($bdd,"categorieModifierActivite","name");?>
+						<div id="modif_cat">
+						</div>
+						<input type="submit" name="mod_categorie" value="Modifier"><br/>
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer une catégorie d'activité:</legend>
 						<label>Sélectionez une catégorie d'activité:  </label>
-						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
-						<input type="submit" value="Supprimer">
+						<?php echo selectCategorie($bdd,"categorieActivite","code_categorie");?>
+						<input type="submit" name="sup_categorie" value="Supprimer">
 				</fieldset>		
 			</form>
 		</section>

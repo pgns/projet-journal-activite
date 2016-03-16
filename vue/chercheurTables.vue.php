@@ -5,7 +5,7 @@
 <script>
 $(document).ready(function(){
 	 $("#categorieModifierActivite").change(function(){
-		$("#modif_cat").html("<label>ID de la catégorie:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom de la catégorie:</label><input type=\"text\" value=\""+$("#categorieModifierActivite option:selected").text()+"\" name=\"nom_categorie\">");
+		$("#modif_cat").html("<input type=\"hidden\" name=\"id\" value=\""+$(this).val()+"\"><label>Nom de la catégorie:</label><input type=\"text\" value=\""+$("#categorieModifierActivite option:selected").text()+"\" name=\"nom_categorie\" required>");
      });
 	
 	
@@ -120,26 +120,18 @@ $(document).ready(function(){
 		if (! empty($_POST)){
 			var_dump($_POST);
 			if (isset($_POST['add_categorie'])){
-				if (empty($_POST['nom_categorie']) || empty($_POST['num_categorie'])){
-					$msg = "<div class=\"msg_alert\">Le nom de la catégorie et le numéro de la catégorie doivent etre remplis!</div>";
+				if (empty($_POST['nom_categorie'])){
+					$msg = "<div class=\"msg_alert\">Le nom de la catégorie doit etre rempli!</div>";
 				}
 				else{
 					$nom_categorie = test_input($_POST['nom_categorie']);
-					$num_categorie = test_input($_POST['num_categorie']);
-					/*--- On véréfie si le numéro de la catégorie est déjà présent----*/
-					$requete = $bdd->query("SELECT COUNT(*) AS num FROM categorieactivite WHERE CodeCategorieActivite = $num_categorie");
-					$data = $requete->fetch();
-					if($data['num']!= 0)
-						$msg = "<div class=\"msg_alert\">Le numéro de la catégorie est déjà présente dans la base de données!</div>";
-					else {
 					/*--- On insère la catégorie dans la bdd*/
-						$req = $bdd->prepare("INSERT INTO categorieactivite (CodeCategorieActivite,NomCategorie) VALUES (:CodeCategorieActivite, :NomCategorie)");
-						$req->execute(array(
-						'CodeCategorieActivite' => $num_categorie,
-						'NomCategorie' => $nom_categorie,
-						));
-						$msg = "<div class=\"msg_confirm\">La catégorie '$nom_categorie' a bien été rajouté avec le numéro '$num_categorie'</div>";
-					}
+					$req = $bdd->prepare("INSERT INTO categorieactivite (NomCategorie) VALUES (:NomCategorie)");
+					$req->execute(array(
+						'NomCategorie' => $nom_categorie
+					));
+					$msg = "<div class=\"msg_confirm\">La catégorie '$nom_categorie' a bien été rajouté!</div>";
+					
 				}
 			}
 			elseif(isset($_POST['sup_categorie'])){
@@ -171,6 +163,24 @@ $(document).ready(function(){
 					}
 				}
 			}
+			elseif(isset($_POST['mod_categorie'])){
+				if (empty($_POST['nom_categorie'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom à la catégorie!</div>";
+				}
+				elseif($_POST['id'] == -1){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner une catégorie!</div>";
+				}
+				else{
+					$nom_categorie = test_input($_POST['nom_categorie']);
+					$id = test_input($_POST['id']);
+					$req = $bdd->prepare('UPDATE categorieactivite SET NomCategorie = :NomCategorie WHERE CodeCategorieActivite = :CodeCategorieActivite');
+					$req->execute(array(
+						'NomCategorie' => $nom_categorie,
+						'CodeCategorieActivite' => $id
+					));
+					$msg = "<div class=\"msg_confirm\">La catégorie a bien été modifiée!</div>";
+				}
+			}
 		}
 		echo $msg;
 	}
@@ -193,8 +203,6 @@ $(document).ready(function(){
 					<legend>Ajouter une catégorie d'activité:</legend>
 						<label>Nom de la catégorie: </label>
 						<input type="text" name="nom_categorie" required/>
-						<label>ID de la catégorie:</label>
-						<input type="number" name="num_categorie" required/><br/>
 						<input type="submit" name="add_categorie" value="Ajouter">
 				</fieldset>
 			</form>
@@ -202,7 +210,7 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier une catégorie d'activité:</legend>
 						<label>Sélectionez une catégorie d'activité: </label>
-						<?php echo selectCategorie($bdd,"categorieModifierActivite","name");?>
+						<?php echo selectCategorieVide($bdd,"categorieModifierActivite","id_ancien");?>
 						<div id="modif_cat">
 						</div>
 						<input type="submit" name="mod_categorie" value="Modifier"><br/>

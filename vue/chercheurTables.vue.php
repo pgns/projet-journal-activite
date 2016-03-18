@@ -8,7 +8,10 @@ $(document).ready(function(){
 		$("#modif_cat").html("<input type=\"hidden\" name=\"id\" value=\""+$(this).val()+"\"><label>Nom de la catégorie:</label><input type=\"text\" value=\""+$("#categorieModifierActivite option:selected").text()+"\" name=\"nom_categorie\" required>");
      });
 	
-	
+	$("#modifierDispostif").change(function(){
+		$("#mod_disp").html("<label>ID du dispositif:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
+     });
+		
 	
     $("#modLieu").click(function(event){
 		event.preventDefault();
@@ -117,6 +120,8 @@ $(document).ready(function(){
 	
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$msg ="";
+		/*Active la détection d'erreur pour la bdd*/
+		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		if (! empty($_POST)){
 			var_dump($_POST);
 			if (isset($_POST['add_categorie'])){
@@ -179,6 +184,87 @@ $(document).ready(function(){
 						'CodeCategorieActivite' => $id
 					));
 					$msg = "<div class=\"msg_confirm\">La catégorie a bien été modifiée!</div>";
+				}
+			}
+			elseif(isset($_POST['add_dispositif'])){
+				if (empty($_POST['nom_dispositif']) || empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au dispositf!</div>";
+				}
+				else{
+					$nom_dispositif = test_input($_POST['nom_dispositif']);
+					$id = test_input($_POST['id']);
+					/*On vérifie si l'id n'est pas déjà présent*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM dispositif WHERE CodeDispositif = $id");
+					$data = $requete->fetch();
+					if($data['num']!= 0){
+						$requete = $bdd->query("SELECT * FROM dispositif WHERE CodeDispositif = $id");
+						$msg ="<div class=\"msg_alert\">Impossible de rajouter le dispositif l'id $id est déà affecté au dispositif ";
+						$data = $requete->fetch();
+						$msg.=$data['NomDispositif']." .</div>";
+					}
+					else{
+					/*On insère le dispositif dans la bdd*/
+						$req = $bdd->prepare("INSERT INTO dispositif (CodeDispositif,NomDispositif) VALUES (:CodeDispositif,:NomDispositif)");
+						$req->execute(array(
+							'CodeDispositif' => $id,
+							'NomDispositif' => $nom_dispositif
+						));
+						$msg = "<div class=\"msg_confirm\">Le dispositif '$nom_dispositif' a bien été rajouté!</div>";
+					}
+					
+				}
+			}
+			elseif(isset($_POST['sup_dispositif'])){
+				if (empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner un dispositf!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					$req = $bdd->prepare("DELETE FROM dispositif WHERE CodeDispositif = :CodeDispositif");
+					$req->execute(array(
+						'CodeDispositif' => $id
+					));
+					$msg = "<div class=\"msg_confirm\">Le dispositif a bien été supprimé</div>";
+				}
+			}
+			elseif(isset($_POST['mod_dispositif'])){
+				if (empty($_POST['id']) || empty($_POST['nom_dispositif'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au dispositif!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					$id_old = test_input($_POST['id_old']);
+					$nom_dispositif = test_input($_POST['nom_dispositif']);
+					if ($id == $id_old){
+						/*L'id ne change pas*/
+						$req = $bdd->prepare('UPDATE dispositif SET NomDispositif = :NomDispositif WHERE CodeDispositif = :CodeDispositif');
+						$req->execute(array(
+							'NomDispositif' => $nom_dispositif,
+							'CodeDispositif' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">Le dispositif a bien été modifiée!</div>";
+					}
+					else{
+						/*L'id change, on vérifie si on n'écrase pas un autre dispositif*/
+						$requete = $bdd->query("SELECT COUNT(*) AS num FROM dispositif WHERE CodeDispositif = $id");
+						$data = $requete->fetch();
+						if($data['num']!= 0){
+							$requete = $bdd->query("SELECT * FROM dispositif WHERE CodeDispositif = $id");
+							$msg ="<div class=\"msg_alert\">Impossible de rajouter le dispositif l'id $id est déà affecté au dispositif ";
+							$data = $requete->fetch();
+							$msg.=$data['NomDispositif']." .</div>";
+						}
+						else{
+							$req = $bdd->prepare('UPDATE dispositif SET NomDispositif = :NomDispositif, CodeDispositif = :CodeDispositif WHERE CodeDispositif = :CodeDispositifOld');
+							$req->execute(array(
+								'NomDispositif' => $nom_dispositif,
+								'CodeDispositifOld' => $id_old,
+								'CodeDispositif' => $id
+							));
+							$msg = "<div class=\"msg_confirm\">Le dispositif a bien été modifiée!</div>";
+						}
+						
+					}
 				}
 			}
 		}
@@ -265,26 +351,31 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modDisp">Modifier la liste des dispositifs</a><br/>
 		<section id="modifDisp" class="allModdifListe">
-			<form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter un dispositif:</legend>
 						<label>Nom du dispositif: </label>
-						<input type="text"/>
+						<input type="text" name="nom_dispositif" required/>
 						<label>ID du dispositif:</label>
-						<input type="number"/><br/>
-						<input type="submit" value="Ajouter">
+						<input type="number" name="id"  required/><br/>
+						<input type="submit" name="add_dispositif" value="Ajouter">
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier un dispositif:</legend>
 						<label>Sélectionez un dispositif: </label>
-						<?php echo selectDispositif($bdd,"iddisp","name");?>
-						<input type="submit" value="Modifier"><br/>
+						<?php echo selectDispositif($bdd,"modifierDispostif","id_old");?>
+						<div id="mod_disp"></div>
+						<input type="submit" name="mod_dispositif" value="Modifier"><br/>
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer un dispositif:</legend>
 						<label>Sélectionez un dispositif:  </label>
-						<?php echo selectDispositif($bdd,"iddisp2","name");?>
-						<input type="submit" value="Supprimer">
+						<?php echo selectDispositif($bdd,"iddisp2","id");?>
+						<input type="submit" name="sup_dispositif" value="Supprimer">
 				</fieldset>		
 			</form>
 		</section>

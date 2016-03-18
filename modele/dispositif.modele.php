@@ -6,7 +6,7 @@
 			$resultat = "<table>\n<tr><th>Code du Dispositif</th><th>Nom du Dispositif</th></tr>\n";
 			$requete = $bdd->query("SELECT * FROM dispositif");
 			while ($data = $requete->fetch()){
-				$resultat.="<tr><td".$data['CodeDispositif']."</td><td>".$data['NomDispositif']."</td></tr>\n";
+				$resultat.="<tr><td>".$data['CodeDispositif']."</td><td>".$data['NomDispositif']."</td></tr>\n";
 			}
 			$requete->closeCursor();
 			$resultat.="</table>";

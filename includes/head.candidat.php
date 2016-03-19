@@ -1,3 +1,14 @@
+<?php
+	session_start();
+	
+	
+	///// A ENLEVER !!!! PAS SECURE ////
+	try	{
+    $bdd = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8', 'root');
+	}catch(Exception $e){
+        $bdd = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8', 'GNS','gns');
+	}
+?>
 <!DOCTYPE HTML>
 <html>
 	<head>

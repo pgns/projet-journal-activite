@@ -13,6 +13,9 @@
 				<div id="table">
 				<?php
 					print_table($currentWeek);		
+				
+					var_dump(RenvoyerCodeCandidatfromCodetilisateur($_SESSION['id'],$bdd));
+					var_dump(renvoyerToutesOccupationDunCandidatALaDate(1,'2016-03-14',$bdd));
 				?>
 				</div>
 			</center>

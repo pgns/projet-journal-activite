@@ -266,6 +266,8 @@ CREATE TABLE IF NOT EXISTS `compagnie` (
   PRIMARY KEY (`CodeCompagnie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `compagnie` (`CodeCompagnie`, `NomCompagnie`) VALUES
+(0, 'Default');
 -- --------------------------------------------------------
 
 --
@@ -283,6 +285,7 @@ CREATE TABLE IF NOT EXISTS `dispositif` (
 --
 
 INSERT INTO `dispositif` (`CodeDispositif`, `NomDispositif`) VALUES
+(1, 'Aucun '),
 (1, 'Ordinateur '),
 (2, 'Tablettes'),
 (3, 'Téléphone'),

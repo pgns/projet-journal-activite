@@ -148,20 +148,7 @@ function SemaineCourante ($SemaineCourante,$Semaine) {
 		</form></center>';
 	}
 
-	
-	function print_table($week){
-		echo '<table>';
-		echo '<tr>';
-		foreach($week as $key => $value){
-			echo '<td><center>'.$value.'</center></td>';
-		}
-		echo '</tr><tr>';
-		foreach($week as $key => $value){
-			echo'<td id='.convertNumToDay($key).'><center><input type="button" name="'.convertNumToDay($key).'" value="+" onclick=""></center></td>';
-		}
-		echo'</tr>';
-		echo'</table>';
-	}
+
 	
 
 ?>

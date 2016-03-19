@@ -12,11 +12,11 @@
 				?>
 				<div id="table">
 				<?php
-					print_table($currentWeek);		
+					print_table($currentWeek,$queryWeek,$_SESSION['id'],$bdd);		
 				
-					var_dump(RenvoyerCodeCandidatfromCodetilisateur($_SESSION['id'],$bdd));
+					/*var_dump(RenvoyerCodeCandidatfromCodetilisateur($_SESSION['id'],$bdd));
 					$occup = renvoyerToutesOccupationDunCandidatALaDate(1,'2016-03-14',$bdd);
-					afficherOccupations($occup,$bdd);
+					afficherOccupations($occup,$bdd);*/
 				?>
 				</div>
 			</center>

@@ -25,6 +25,25 @@
 			$table[] = $data;
 		return $table;
 	}
+	
+	function convertCodeToNomActivite($codeActivite,$bdd){
+		$sql = 'SELECT NomActivite FROM activite WHERE CodeActivite="'.$codeActivite.'"';
+		$res = $bdd->query($sql);
+		$data = $res->fetch();
+		return $data['NomActivite'];
+	}
+	
+	function afficherOccupations($table,$bdd){
+		echo'<table>';
+		foreach($table as $occupation){
+			echo'<tr><td>';
+			echo convertDateTimeToHours($occupation['HeureDebut']).'-';	
+			echo convertDateTimeToHours($occupation['HeureFin']).'<br>';	
+			echo convertCodeToNomActivite($occupation['CodeActivite'],$bdd);	
+			echo'</tr></td>';	
+		}
+		echo'</table>';
+	}
 
 	require_once('../includes/head.candidat.php');
 	require_once('../vue/candidatActivites.vue.php');			

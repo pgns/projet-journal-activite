@@ -117,6 +117,10 @@ function SemaineCourante ($SemaineCourante,$Semaine) {
 		) ;
 	}
 	
+	function convertDateTimeToHours($DateTime){
+		return substr($DateTime,11,-3);
+	}
+	
 	function ConvertNumSemaineToDateDebEtFin($W,$Y)
 	{
 		//renvoie la date de début et fin de semaine en fonction du numéro de semaine et de l'année.

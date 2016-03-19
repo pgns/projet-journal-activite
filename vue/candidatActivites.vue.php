@@ -15,7 +15,8 @@
 					print_table($currentWeek);		
 				
 					var_dump(RenvoyerCodeCandidatfromCodetilisateur($_SESSION['id'],$bdd));
-					var_dump(renvoyerToutesOccupationDunCandidatALaDate(1,'2016-03-14',$bdd));
+					$occup = renvoyerToutesOccupationDunCandidatALaDate(1,'2016-03-14',$bdd);
+					afficherOccupations($occup,$bdd);
 				?>
 				</div>
 			</center>

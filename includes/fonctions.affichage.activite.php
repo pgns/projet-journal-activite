@@ -40,7 +40,7 @@
 	function afficheColone($codeCandidat,$date,$day,$bdd){
 		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
 		if(isset($table)){
-			return RetournerOccupations($table,$bdd).'<center>
+			return '<center><div>'.RetournerOccupations($table,$bdd).'</div>
 			<input type="button" name="'.convertNumToDay($day).'" value="+" onclick="">
 			</center>';
 		}

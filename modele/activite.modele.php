@@ -1,6 +1,11 @@
 <?php
-	function get_Activites($bdd){
-		$requete = "SELECT * FROM activite ";
+	/* Renvoie un tableau d'objet php contenant la liste des activités de la BDD */
+	/* 			- Si $codeCategorie est renseigné, la fonction retourne la liste complete des activités ayant pour codeCategorie $codeCategorie. */
+	/* 			- Si $codeCategorie n'est pas renseigné, la fonction retourne la liste complete des activités. */
+	function get_Activites($bdd, $codeCategorie = "%"){
+		if($codeCategorie == '%'){$option = "";}
+		else{$option = " WHERE CodeCategorie = ".$codeCategorie;}
+		$requete = "SELECT * FROM activite".$option;
 		$sth = $bdd->prepare($requete);
 		$sth->execute();
 		

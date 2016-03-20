@@ -1,6 +1,17 @@
 <?php
-
-		
+		/* Renvoie un tableau d'objet php contenant la liste complete des CategorieActivités de la BDD*/
+		function get_CategorieActivite($bdd){
+			$requete = "SELECT * FROM categorieactivite ";
+			$sth = $bdd->prepare($requete);
+			$sth->execute();
+			
+			while ($reponse = $sth->fetch(PDO::FETCH_ASSOC))
+			{
+				$listeCategorieActivite[] = new categorieActivite($reponse);
+			}
+			return $listeCategorieActivite;
+		}
+	
 		/* Renvoie le tableau de la liste des catégories d'activités en html*/
 		function tableauCategorie($bdd){
 			$requete = $bdd->query("SELECT * FROM categorieactivite");

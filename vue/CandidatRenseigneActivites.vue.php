@@ -3,8 +3,8 @@ Activité / Lieux / Avec qui / Autre
 <br />
 <br />Categorie Activité <select>
 	<?php
-		foreach($liste_categorie_Activites as $id => $object){
-			echo'<option id="'.$object->xxxx.'">'.$object->xxxx.'</option>';
+		foreach($liste_CategorieActivite as $id => $object){
+			echo'<option id="'.$object->CodeCategorieActivite.'">'.$object->NomCategorie.'</option>';
 		}
 	?>
 	</select>
@@ -19,8 +19,8 @@ Activité / Lieux / Avec qui / Autre
 <br />
 <br />Categorie Lieux<select>
 	<?php
-		foreach($liste_Categorie_Lieux as $id => $object){
-			echo'<option id="'.$object->xxx.'">'.$object->xxx.'</option>';
+		foreach($liste_CategorieLieu as $id => $object){
+			echo'<option id="'.$object->CodeCategorieLieux.'">'.$object->NomCategorie.'</option>';
 		}
 	?>
 </select>

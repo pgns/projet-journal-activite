@@ -1,6 +1,8 @@
 <?php
 	// retourne tout les leiux dans un tableau d'objet
-	function get_Lieux($bdd){
+	function get_Lieux($bdd, $codeLieux = "%"){
+		if($codeLieux == '%'){$option = "";}
+		else{$option = " WHERE CodeLieux = ".$codeLieux;}
 		$requete = "SELECT * FROM lieu ";
 		$sth = $bdd->prepare($requete);
 		$sth->execute();

@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `dispositif` (
 --
 
 INSERT INTO `dispositif` (`CodeDispositif`, `NomDispositif`) VALUES
-(1, 'Aucun '),
+(0, 'Aucun '),
 (1, 'Ordinateur '),
 (2, 'Tablettes'),
 (3, 'Téléphone'),

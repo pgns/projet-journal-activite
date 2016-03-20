@@ -3,25 +3,26 @@
 	
 	foreach($_POST as $key=>$value){$$key=$value;}
 	foreach($_GET as $key=>$value){$$key=$value;}
-	
+
 	if($categorie == "lieu"){
 		require '../class/lieu.class.php';
 		require '../modele/lieux.modele.php';
 
-		$liste_Categorie = get_CategorieLieu($bdd, $codeCategorie);
+		$liste_Lieu = get_Lieux($bdd, $codeCategorie);
+
 		
-		foreach($liste_Categorie as $id => $object){
-			echo'<option id="'.$object->CodeLieux.'">'.$object->NomCategorie.'</option>';
+		foreach($liste_Lieu as $id => $object){
+			echo '<option id="'.$object->CodeLieux.'">'.$object->NomLieux.'</option>';
 		}
 	}
 	if($categorie == "activite"){
+		require '../class/activite.class.php';
 		require '../modele/activite.modele.php';
-		require '../class/categorieActivite.class.php';
-		
-		$liste_Categorie = get_CategorieActivite($bdd, $codeCategorie);
+	
+		$liste_Categorie = get_Activites($bdd, $codeCategorie);
 		
 		foreach($liste_Categorie as $id => $object){
-			echo'<option id="'.$object->CodeActivite.'">'.$object->NomCategorie.'</option>';
+			echo'<option id="'.$object->CodeActivite.'">'.$object->NomActivite.'</option>';
 		}
 	}
 ?>

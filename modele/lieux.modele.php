@@ -1,9 +1,12 @@
 <?php
-	// retourne tout les leiux dans un tableau d'objet
-	function get_Lieux($bdd, $codeLieux = "%"){
-		if($codeLieux == '%'){$option = "";}
-		else{$option = " WHERE CodeLieux = ".$codeLieux;}
-		$requete = "SELECT * FROM lieu ";
+	/* Renvoie un tableau d'objet php contenant la liste des lieux de la BDD */
+	/* 			- Si $codeLieu est renseigné, la fonction retourne la liste complete des Lieux ayant pour codeLieux $codeLieu. */
+	/* 			- Si $codeLieu n'est pas renseigné, la fonction retourne la liste complete des Lieux. */
+	function get_Lieux($bdd, $codeLieu = "%"){
+		if($codeLieu == '%'){$option = "";}
+		else{$option = " WHERE CodeCategorieLieux = ".$codeLieu;}
+		$requete = "SELECT * FROM lieu".$option;
+
 		$sth = $bdd->prepare($requete);
 		$sth->execute();
 		

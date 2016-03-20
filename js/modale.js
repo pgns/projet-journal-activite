@@ -58,8 +58,9 @@ $(document).ready(function() {
 
 function showModal(J){
    var id = '#modal';
-   $(id).html('ajouter une activité '+J+'<br/><a href="#" class="close">Fermer la fenetre</a>');
+   var content = 'ajouter une activité '+J+'<br/><form action="Activite.recorder.php" method="post"><p>Votre nom : <input type="text" name="nom" /></p><p>Votre âge : <input type="text" name="age" /></p><p><input type="submit" value="OK"></p></form><a href="#" class="close">Fermer la fenetre</a>';
    
+   $(id).html(content);
    // On definit la taille de la fenetre modale
    resizeModal();
    

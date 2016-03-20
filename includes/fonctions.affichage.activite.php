@@ -26,11 +26,11 @@
 	function RetournerOccupations($table,$bdd){
 		$s = '<table>';
 		foreach($table as $occupation){
-			$s=$s.'<tr><td>';
+			$s=$s.'<tr><td><center><div class="celluleOccup">';
 			$s=$s. convertDateTimeToHours($occupation['HeureDebut']).'-';	
 			$s=$s. convertDateTimeToHours($occupation['HeureFin']).'<br>';	
 			$s=$s. convertCodeToNomActivite($occupation['CodeActivite'],$bdd);	
-			$s=$s.'</tr></td>';	
+			$s=$s.'</div></tr></td></center>';	
 		}
 		$s=$s.'</table>';
 		return $s;
@@ -56,11 +56,11 @@
 		echo '<table>';
 		echo '<tr>';
 		foreach($weekaffichage as $key => $value){
-			echo '<td><center>'.$value.'</center></td>';
+			echo '<div class="coloneOccup"><td><center>'.$value.'</center></td></div>';
 		}
 		echo '</tr><tr>';
 		foreach($weekquery as $key => $value){
-			echo'<td id='.convertNumToDay($key).'>'.afficheColone($codeCandidat,$value,$key,$bdd).'</td>';
+			echo'<div class="coloneOccup"><td id='.convertNumToDay($key).'>'.afficheColone($codeCandidat,$value,$key,$bdd).'</td></div>';
 			
 		}
 		echo'</tr>';

@@ -36,7 +36,7 @@
 		
 		function selectCategorieVide($bdd,$id,$name){
 			$resultat = "<select name=\"$name\" id=\"$id\">\n";
-			$resultat.= "<option value=\"-1\" selected></option>\n";
+			$resultat.= "<option value=\"-1\" selected>Sélectionnez une catégorie d'activité</option>\n";
 			$requete = $bdd->query("SELECT * FROM categorieactivite");
 			while ($data = $requete->fetch()){
 				$resultat.="\t<option value=\"".$data['CodeCategorieActivite']."\">".$data['NomCategorie']."</option>\n";

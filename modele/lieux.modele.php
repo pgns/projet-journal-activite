@@ -41,4 +41,16 @@
 			return $resultat;
 	}
 	
+		/* Renvoie un select avec la liste des lieux à sélectionner*/
+	function selectLieuVide($bdd,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n\t<option value=\"-1\">Sélectionnez un lieu à modifier</option>\n";
+			$requete = $bdd->query("SELECT * FROM lieu");
+			while ($data = $requete->fetch()){
+				$resultat.="\t<option value=\"".$data['CodeLieux']."\">".$data['NomLieux']."</option>\n";
+			}
+			$resultat.="</select>";
+			$requete->closeCursor();
+			return $resultat;
+	}
+	
 ?>

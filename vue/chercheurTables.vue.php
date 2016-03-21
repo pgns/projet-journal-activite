@@ -11,7 +11,11 @@ $(document).ready(function(){
 	$("#modifierDispostif").change(function(){
 		$("#mod_disp").html("<label>ID du dispositif:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
      });
-		
+	 
+	 $("#modifierLieu").change(function(){
+		$("#mod_lieu").html("<label>ID du lieu:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
+     });
+	
 	
     $("#modLieu").click(function(event){
 		event.preventDefault();
@@ -65,14 +69,7 @@ $(document).ready(function(){
 		$("#afficheDisp").slideToggle();
     })
 	
-	$("#modiferLieu").change(function(){
-		var str = "<label>Renomez le lieu: </label><input type=\"text\" value=\"";
-		$("#modiferLieu option:selected").each(function() {
-			str += $(this).text() + "\"required ><br/><label>Modifiez le code du lieu: </label><input id=\"modifierCodeLieu\" type=\"number\" min=\"0\" value=\""+$(this).val()+"\">";
-			var idModifLieu = $(this).val();
-		});
-		$("#modifierLeLieu").html(str);
-	});
+
 	
 
 	$(".allAfficheListe").hide();
@@ -220,15 +217,20 @@ $(document).ready(function(){
 				}
 				else{
 					$id = test_input($_POST['id']);
-					$req = $bdd->prepare("DELETE FROM dispositif WHERE CodeDispositif = :CodeDispositif");
-					$req->execute(array(
-						'CodeDispositif' => $id
-					));
-					$msg = "<div class=\"msg_confirm\">Le dispositif a bien été supprimé</div>";
+					if ($id != -1){
+						$req = $bdd->prepare("DELETE FROM dispositif WHERE CodeDispositif = :CodeDispositif");
+						$req->execute(array(
+							'CodeDispositif' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">Le dispositif a bien été supprimé</div>";
+					}
+					else{
+						$msg = "<div class=\"msg_alert\">Il faut sélectionner un dispositf!</div>";
+					}
 				}
 			}
 			elseif(isset($_POST['mod_dispositif'])){
-				if (empty($_POST['id']) || empty($_POST['nom_dispositif'])){
+				if (empty($_POST['id']) || empty($_POST['nom_dispositif']) || $id == -1){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au dispositif!</div>";
 				}
 				else{
@@ -264,6 +266,93 @@ $(document).ready(function(){
 							$msg = "<div class=\"msg_confirm\">Le dispositif a bien été modifiée!</div>";
 						}
 						
+					}
+				}
+			}
+			elseif(isset($_POST['add_lieu'])){
+				if (empty($_POST['nom_lieu']) || empty($_POST['id_lieu'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au lieu!</div>";
+				}
+				else{
+					$nom_lieu = test_input($_POST['nom_lieu']);
+					$id = test_input($_POST['id_lieu']);
+					$cat = test_input($_POST['cat']);
+					/*On vérifie si l'id n'est pas déjà présent*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM lieu WHERE CodeLieux = $id");
+					$data = $requete->fetch();
+					if($data['num']!= 0){
+						$requete = $bdd->query("SELECT * FROM lieu WHERE CodeLieux = $id");
+						$msg ="<div class=\"msg_alert\">Impossible de rajouter le lieu l'id $id est déà affecté au lieu ";
+						$data = $requete->fetch();
+						$msg.=$data['NomLieux']." .</div>";
+					}
+					else{
+					/*On insère le dispositif dans la bdd*/
+						$req = $bdd->prepare("INSERT INTO lieu (CodeLieux,NomLieux,CodeCategorieLieux) VALUES (:CodeLieux,:NomLieux,:CodeCategorieLieux)");
+						$req->execute(array(
+							'CodeLieux' => $id,
+							'NomLieux' => $nom_lieu,
+							'CodeCategorieLieux' => $cat
+						));
+						$msg = "<div class=\"msg_confirm\">Le lieux '$nom_lieu' a bien été rajouté!</div>";
+					}
+					
+				}
+			}
+			elseif(isset($_POST['sup_lieu'])){
+				if (empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner un lieu!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					if ($id != -1){
+						$req = $bdd->prepare("DELETE FROM lieu WHERE CodeLieux = :CodeLieux");
+						$req->execute(array(
+							'CodeLieux' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">Le lieu a bien été supprimé</div>";
+					}
+					else{
+						$msg = "<div class=\"msg_alert\">Il faut sélectionner un lieu!</div>";
+					}
+				}
+			}
+			elseif(isset($_POST['mod_lieu'])){
+				if (empty($_POST['id']) || empty($_POST['nom_lieu']) || $id == -1){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au lieu!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					$id_old = test_input($_POST['id_old']);
+					$nom_lieu = test_input($_POST['nom_lieu']);
+					if ($id == $id_old){
+						/*L'id ne change pas*/
+						$req = $bdd->prepare('UPDATE lieu SET NomLieux = :NomLieux WHERE CodeLieux = :CodeLieux');
+						$req->execute(array(
+							'NomLieux' => $nom_lieu,
+							'CodeLieux' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">Le lieu a bien été modifiée!</div>";
+					}
+					else{
+						/*L'id change, on vérifie si on n'écrase pas un autre lieu*/
+						$requete = $bdd->query("SELECT COUNT(*) AS num FROM lieu WHERE CodeLieux = $id");
+						$data = $requete->fetch();
+						if($data['num']!= 0){
+							$requete = $bdd->query("SELECT * FROM lieu WHERE CodeLieux = $id");
+							$msg ="<div class=\"msg_alert\">Impossible de modifier le lieu l'id $id est déà affecté au dispositif ";
+							$data = $requete->fetch();
+							$msg.=$data['NomLieux']." .</div>";
+						}
+						else{
+							$req = $bdd->prepare('UPDATE lieu SET NomLieux = :NomLieux, CodeLieux = :CodeLieux WHERE CodeLieux = :CodeLieuxOld');
+							$req->execute(array(
+								'NomLieux' => $nom_lieu,
+								'CodeLieuxOld' => $id_old,
+								'CodeLieux' => $id
+							));
+							$msg = "<div class=\"msg_confirm\">Le lieu a bien été modifiée!</div>";
+						}			
 					}
 				}
 			}
@@ -386,27 +475,36 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modLieu">Modifier la liste des lieux et des transports</a><br/>
 		<section id="modifLieu" class="allModdifListe">
-			<form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter un lieu & transport:</legend>
 						<label>Nom du lieu: </label>
-						<input type="text"/>
+						<input type="text" name="nom_lieu"/>
 						<label>ID du lieu:</label>
-						<input type="number" id="ajoutCodeLieu"/><br/>
-						<input type="submit" value="Ajouter">
+						<input type="number" id="ajoutCodeLieu" name="id_lieu"/><br/>
+						<label>Catégorie du lieu:</label>
+						<select name="cat">
+							<option value="1">Lieu</option>
+							<option value="2">Transport</option>
+						</select>
+						<input type="submit" name="add_lieu" value="Ajouter">
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier un lieu & transport:</legend>
 						<label>Sélectionez un lieu: </label>
-						<?php echo selectLieu($bdd,"modiferLieu","listeLieu");?>
-						<div id="modifierLeLieu"></div>
-						<input type="submit" value="Modifier"><br/>
+						<?php echo selectLieuVide($bdd,"modifierLieu","id_old");?>
+						<div id="mod_lieu"></div>
+						<input type="submit" name="mod_lieu" value="Modifier"><br/>
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer un lieu & transport:</legend>
 						<label>Sélectionez un lieu:  </label>
-						<?php echo selectLieu($bdd,"supprLieu","listeLieu");?>
-						<input type="submit" value="Supprimer">
+						<?php echo selectLieu($bdd,"supprLieu","id");?>
+						<input type="submit" name="sup_lieu" value="Supprimer">
 				</fieldset>		
 			</form>
 		</section>

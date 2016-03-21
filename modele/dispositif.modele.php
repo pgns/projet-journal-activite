@@ -15,7 +15,7 @@
 		
 		/* Renvoie un select avec la liste des dispositifs */
 		function selectDispositif($bdd,$id,$name){
-			$resultat = "<select name=\"$name\" id=\"$id\">\n";
+			$resultat = "<select name=\"$name\" id=\"$id\">\n\t<option selected value=\"-1\">Sélectionnez un dispositif</option>\n";
 			$requete = $bdd->query("SELECT * FROM dispositif");
 			while ($data = $requete->fetch()){
 				$resultat.="\t<option value=\"".$data['CodeDispositif']."\">".$data['NomDispositif']."</option>\n";

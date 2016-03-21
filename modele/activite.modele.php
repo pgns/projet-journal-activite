@@ -38,7 +38,7 @@
 			$resultat = "<select name=\"$name\" id=\"$id\">\n";
 			$requete = $bdd->query("SELECT * FROM activite");
 			while ($data = $requete->fetch()){
-				$resultat.="\t<option value=\"".$data['CodeCategorie']."\">".$data['NomActivite']."</option>\n";
+				$resultat.="\t<option value=\"".$data['CodeActivite']."\">".$data['NomActivite']."</option>\n";
 			}
 			$requete->closeCursor();
 			$resultat.="</select>";

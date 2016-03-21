@@ -356,6 +356,56 @@ $(document).ready(function(){
 					}
 				}
 			}
+			elseif(isset($_POST['add_activite'])){
+				if (empty($_POST['nom_activite']) || empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à l'activité!</div>";
+				}
+				else{
+					$nom_activite = test_input($_POST['nom_activite']);
+					$id = test_input($_POST['id']);
+					$cat = test_input($_POST['cat_activite']);
+					$desc = nl2br(test_input($_POST['desc'])); 
+					/*On vérifie si l'id n'est pas déjà présent*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM activite WHERE CodeActivite = $id");
+					$data = $requete->fetch();
+					if($data['num']!= 0){
+						$requete = $bdd->query("SELECT * FROM activite WHERE CodeActivite = $id");
+						$msg ="<div class=\"msg_alert\">Impossible de rajouter l'activite l'id $id est déà affecté à l'activité ";
+						$data = $requete->fetch();
+						$msg.=$data['NomActivite']." .</div>";
+					}
+					else{
+					/*On insère le dispositif dans la bdd*/
+						$req = $bdd->prepare("INSERT INTO activite (CodeActivite,NomActivite,CodeCategorie,DescriptifActivite) VALUES (:CodeActivite,:NomActivite,:CodeCategorie,:DescriptifActivite)");
+						$req->execute(array(
+							'CodeActivite' => $id ,
+							'NomActivite' => $nom_activite ,
+							'CodeCategorie' => $cat ,
+							'DescriptifActivite' => $desc
+						));
+						$msg = "<div class=\"msg_confirm\">L'activite '$nom_activite' a bien été rajouté!</div>";
+					}
+					
+				}
+			}
+			elseif(isset($_POST['sup_activite'])){
+				if (empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner une activite!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					if ($id != -1){
+						$req = $bdd->prepare("DELETE FROM activite WHERE CodeActivite = :CodeActivite");
+						$req->execute(array(
+							'CodeActivite' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">L'activite a bien été supprimé</div>";
+					}
+					else{
+						$msg = "<div class=\"msg_alert\">Il faut sélectionner une activité!</div>";
+					}
+				}
+			}
 		}
 		echo $msg;
 	}
@@ -407,28 +457,34 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modAct">Modifier la liste des activités</a><br/>
 		<section id="modifAct" class="allModdifListe">
-			<form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter une activité:</legend>
 						<label>Nom d l'activité: </label>
-						<input type="text"/>
+						<input type="text" name="nom_activite"/>
 						<label>ID de l'activité:</label>
-						<input type="number"/><br/>
+						<input type="number" name="id"/><br/>
 						<label>Sélectionez une catégorie pour l'activité: </label>
-						<?php echo selectCategorie($bdd,"categorieActivite","name");?>
-						<input type="submit" value="Ajouter">
+						<?php echo selectCategorie($bdd,"categorieActivite","cat_activite");?>
+						<label>Description de l'activité</label>
+						<textarea name="desc"></textarea>
+						<input type="submit" name="add_activite" value="Ajouter">
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier une activité:</legend>
 						<label>Sélectionez une activité: </label>
 						<?php echo selectActivite($bdd,"idmodi","name");?>
 						<input type="submit" value="Modifier"><br/>
 				</fieldset>
+			</form>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer une activité:</legend>
 						<label>Sélectionez une activité:  </label>
-						<?php echo selectActivite($bdd,"idmod","name");?>
-						<input type="submit" value="Supprimer">
+						<?php echo selectActivite($bdd,"idmod","id");?>
+						<input type="submit" name="sup_activite" value="Supprimer">
 				</fieldset>		
 			</form>
 		</section>

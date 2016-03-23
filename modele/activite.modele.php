@@ -45,6 +45,18 @@
 			return $resultat;
 	}
 	
+	/* Renvoie un select avec la liste des lieux pour la modification*/
+	function selectActiviteModif($bdd,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n\t<option value=\"-1\">Sélectionnez une activité à modifier</option>\n";
+			$requete = $bdd->query("SELECT * FROM activite");
+			while ($data = $requete->fetch()){
+				$codeCategorie = $data['CodeCategorie'];
+				$resultat.="\t<option value=\"".$data['CodeActivite']."\">".$data['NomActivite']."</option>\n";
+			}
+			$requete->closeCursor();
+			$resultat.="</select>";
+			return $resultat;
+	}
 	
 	
 ?>

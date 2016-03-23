@@ -16,6 +16,19 @@ $(document).ready(function(){
 		$("#mod_lieu").html("<label>ID du lieu:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
      });
 	
+	$("#modifierActivite").change(function(){
+		console.log("sss");
+		$.ajax({
+		   url : '../modele/modifier_activite.php',
+		   type : 'POST',
+		   data : 'code=' + $(this).val() + '&nom='+$("#modifierActivite option:selected").text(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+			$("#mod_act").html(code_html);
+		   }
+		});
+     });
+	
 	
     $("#modLieu").click(function(event){
 		event.preventDefault();
@@ -406,6 +419,51 @@ $(document).ready(function(){
 					}
 				}
 			}
+			elseif(isset($_POST['mod_activite'])){ 
+				if (empty($_POST['id']) || empty($_POST['nom_act'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à l'activité!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					$id_old = test_input($_POST['id_old']);
+					$nom_act = test_input($_POST['nom_act']);
+					$descr = nl2br(test_input($_POST['descr_act']));
+					$cat = test_input($_POST['cat_activite']);
+					if ($id == $id_old){
+						/*L'id ne change pas*/
+						$req = $bdd->prepare('UPDATE activite SET NomActivite = :NomActivite, DescriptifActivite = :DescriptifActivite, CodeCategorie = :CodeCategorie WHERE CodeActivite = :CodeActivite');
+						$req->execute(array(
+							'NomActivite' => $nom_act,
+							'DescriptifActivite' => $descr,
+							'CodeCategorie' => $cat,
+							'CodeActivite' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">L'activité a bien été modifiée!</div>";
+					}
+					else{
+						/*L'id change, on vérifie si on n'écrase pas un autre dispositif*/
+						$requete = $bdd->query("SELECT COUNT(*) AS num FROM activite WHERE CodeActivite = $id");
+						$data = $requete->fetch();
+						if($data['num']!= 0){
+							$requete = $bdd->query("SELECT * FROM activite WHERE CodeActivite = $id");
+							$msg ="<div class=\"msg_alert\">Impossible de modifier l'activité l'id $id est déjà affecté à l'activité ";
+							$data = $requete->fetch();
+							$msg.=$data['NomActivite']." .</div>";
+						}
+						else{
+							$req = $bdd->prepare('UPDATE activite SET NomActivite = :NomActivite, DescriptifActivite = :DescriptifActivite, CodeCategorie = :CodeCategorie, CodeActivite = :CodeActivite WHERE CodeActivite = :CodeActiviteOld');
+							$req->execute(array(
+								'NomActivite' => $nom_act,
+								'CodeActivite' => $id,
+								'CodeActiviteOld' => $id_old,
+								'DescriptifActivite' => $descr,
+								'CodeCategorie' => $cat
+							));
+							$msg = "<div class=\"msg_confirm\">L'activité a bien été modifiée!</div>";
+						}	
+					}
+				}
+			}
 		}
 		echo $msg;
 	}
@@ -475,8 +533,9 @@ $(document).ready(function(){
 				<fieldset>
 					<legend>Modifier une activité:</legend>
 						<label>Sélectionez une activité: </label>
-						<?php echo selectActivite($bdd,"idmodi","name");?>
-						<input type="submit" value="Modifier"><br/>
+						<?php echo selectActiviteModif($bdd,"modifierActivite","id_old");?>
+						<div id="mod_act"></div>
+						<input type="submit" name="mod_activite" value="Modifier"><br/>
 				</fieldset>
 			</form>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">

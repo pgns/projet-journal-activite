@@ -8,6 +8,10 @@
 	require '../modele/dispositif.modele.php';
 
 	require_once('../includes/head.inc.php');
+?>	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script src="../js/chercheurTables.js"></script>
+<?php
 	require_once('../vue/chercheurTables.vue.php');
 	require_once('../includes/chercheurSidebar.inc.php');
 	require_once('../includes/footer.inc.php');

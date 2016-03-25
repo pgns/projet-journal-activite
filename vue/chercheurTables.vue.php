@@ -1,126 +1,6 @@
 <!-- Content -->
 <div id="content">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-	 $("#categorieModifierActivite").change(function(){
-		$("#modif_cat").html("<input type=\"hidden\" name=\"id\" value=\""+$(this).val()+"\"><label>Nom de la catégorie:</label><input type=\"text\" value=\""+$("#categorieModifierActivite option:selected").text()+"\" name=\"nom_categorie\" required>");
-     });
-	
-	$("#modifierDispostif").change(function(){
-		$("#mod_disp").html("<label>ID du dispositif:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
-     });
-	 
-	 $("#modifierLieu").change(function(){
-		$("#mod_lieu").html("<label>ID du lieu:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
-     });
-	
-	$("#modifierActivite").change(function(){
-		console.log("sss");
-		$.ajax({
-		   url : '../modele/modifier_activite.php',
-		   type : 'POST',
-		   data : 'code=' + $(this).val() + '&nom='+$("#modifierActivite option:selected").text(),
-		   dataType : 'html', // On désire recevoir du HTML
-		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
-			$("#mod_act").html(code_html);
-		   }
-		});
-     });
-	
-	
-    $("#modLieu").click(function(event){
-		event.preventDefault();
-        $("#modifLieu").slideToggle();
-		$("#modifDisp").hide();
-		$("#modifAct").hide();
-		$("#modifCat").hide();
-    });
-	
-	$("#modDisp").click(function(event){
-		event.preventDefault();
-        $("#modifLieu").hide();
-		$("#modifDisp").slideToggle();
-		$("#modifAct").hide();
-		$("#modifCat").hide();
-    });
-	
-	$("#modAct").click(function(event){
-		event.preventDefault();
-        $("#modifLieu").hide();
-		$("#modifDisp").hide();
-		$("#modifAct").slideToggle();
-		$("#modifCat").hide();
-    });
-
-	$("#modCat").click(function(event){
-		event.preventDefault();
-        $("#modifLieu").hide();
-		$("#modifDisp").hide();
-		$("#modifAct").hide();
-		$("#modifCat").slideToggle();
-    });
-	
-	$("#afficherCat").click(function(event){
-		event.preventDefault();
-		$("#afficheCat").slideToggle();
-    });
-	
-	$("#afficherAct").click(function(event){
-		event.preventDefault();
-		$("#afficheAct").slideToggle();
-    });
-	
-	$("#afficherLieu").click(function(event){
-		event.preventDefault();
-		$("#afficheLieu").slideToggle();
-    });
-	
-	$("#afficherDisp").click(function(event){
-		event.preventDefault();
-		$("#afficheDisp").slideToggle();
-    })
-	
-
-	
-
-	$(".allAfficheListe").hide();
-	$(".allModdifListe").hide();
-	
-	
-	/*A modifier dans le js au dessus*/
-	$("#modifierCodeLieu").bind('keyup click',function(){
-		console.log(idModifLieu);
-		console.log("sss");
-		$.ajax({
-		   url : 'more_com.php',
-		   type : 'POST',
-		   data : 'code=' + email,
-		   dataType : 'html', // On désire recevoir du HTML
-		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
-				
-		   }
-		});
-	});
-	
-	$("#ajoutCodeLieu").bind('keyup click',function(){
-		console.log();
-		$.ajax({
-		   url : '../modele/idLieuAjax.php',
-		   type : 'POST',
-		   data : 'code=' + $('#ajoutCodeLieu').val(),
-		   dataType : 'html', // On désire recevoir du HTML
-		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
-				$("#idLieuAjax").html(code_html);
-		   }
-		});
-	});
-	
-	
-});
-
-</script>
 	<div class="inner">
 	<?php include("../modele/chercheurTables.modele.php"); ?>
 		<!--
@@ -136,6 +16,7 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modCat">Modifier la liste des catégories d'activités</a><br/>
 		<section id="modifCat" class="allModdifListe">
+			<a href="#" class="margin_left_30 ss_cat">Ajouter une catégorie d'activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter une catégorie d'activité:</legend>
@@ -144,6 +25,7 @@ $(document).ready(function(){
 						<input type="submit" name="add_categorie" value="Ajouter">
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Modifier une catégorie d'activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier une catégorie d'activité:</legend>
@@ -154,6 +36,7 @@ $(document).ready(function(){
 						<input type="submit" name="mod_categorie" value="Modifier"><br/>
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Supprimer une catégorie d'activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer une catégorie d'activité:</legend>
@@ -170,6 +53,7 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modAct">Modifier la liste des activités</a><br/>
 		<section id="modifAct" class="allModdifListe">
+			<a href="#" class="margin_left_30 ss_cat">Ajouter une activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter une activité:</legend>
@@ -184,6 +68,7 @@ $(document).ready(function(){
 						<input type="submit" name="add_activite" value="Ajouter">
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Modifier une activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier une activité:</legend>
@@ -193,6 +78,7 @@ $(document).ready(function(){
 						<input type="submit" name="mod_activite" value="Modifier"><br/>
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Supprimer une activité</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer une activité:</legend>
@@ -210,6 +96,7 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modDisp">Modifier la liste des dispositifs</a><br/>
 		<section id="modifDisp" class="allModdifListe">
+			<a href="#" class="margin_left_30 ss_cat">Ajouter un dispositif</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter un dispositif:</legend>
@@ -220,6 +107,7 @@ $(document).ready(function(){
 						<input type="submit" name="add_dispositif" value="Ajouter">
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Modifier un dispositif</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier un dispositif:</legend>
@@ -229,6 +117,7 @@ $(document).ready(function(){
 						<input type="submit" name="mod_dispositif" value="Modifier"><br/>
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Supprimer un dispositif</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer un dispositif:</legend>
@@ -245,6 +134,7 @@ $(document).ready(function(){
 		</section>
 		<a href="#" id="modLieu">Modifier la liste des lieux et des transports</a><br/>
 		<section id="modifLieu" class="allModdifListe">
+			<br/><a href="#" class="margin_left_30 ss_cat">Ajouter un lieu & transport</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Ajouter un lieu & transport:</legend>
@@ -261,6 +151,7 @@ $(document).ready(function(){
 						<input type="submit" name="add_lieu" value="Ajouter">
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Modifier un lieu & transport</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Modifier un lieu & transport:</legend>
@@ -270,6 +161,7 @@ $(document).ready(function(){
 						<input type="submit" name="mod_lieu" value="Modifier"><br/>
 				</fieldset>
 			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Supprimer un lieu & transport</a>
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 				<fieldset>
 					<legend>Supprimer un lieu & transport:</legend>

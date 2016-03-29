@@ -1,9 +1,6 @@
 <!-- Content -->
 <div id="content">
 	<div class="inner">
-		<!--
-		Insert content here			
-		-->		
 		<?php include('../modele/chercheurMonCompte.modele.php');?>
 		
 		<center>
@@ -32,7 +29,7 @@
 		</form>
 		</div>
 
-		<h2> Nom </h2>
+		<h2> Nom :</h2>
 		Nom: <?php echo nomChercheur($bdd);?> <br/><a href="#" class="all_m_l">Modifier mon nom</a>
 		<div class="all_m">
 		<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
@@ -43,7 +40,7 @@
 			<input type="submit" name="mod_nom" value="Modifier"/>
 		</form>
 		</div>
-		<h2>Login</h2>
+		<h2>Login :</h2>
 		Login: <?php echo loginChercheur($bdd);?> <br/><a href="#" class="all_m_l">Modifier mon login</a>
 		<div class="all_m">
 		<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
@@ -54,7 +51,7 @@
 			<input type="submit" name="mod_login" value="Modifier"/>
 		</form>
 		</div>
-		<h2>Suppression du compte</h2>
+		<h2>Suppression du compte :</h2>
 		<a href="#" class="all_m_l">Supprimer mon compte</a>
 		<div class="all_m">
 			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">

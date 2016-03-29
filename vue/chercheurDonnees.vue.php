@@ -10,7 +10,7 @@
 			Il y a <?php echo nombreCandidat($bdd);?> candidats inscrit à l'étude qui ont renseigné un total de <?php echo nombreOccupation($bdd);?> occupations sur la période allant du <?php echo premierOccupation($bdd);?> au <?php echo dernierOccupation($bdd);?>.<br/>
 			<a href="#" id="afficheLegende">Afficher les noms correspondant aux codes</a> 
 			<div id="legende">
-			<a href="../file/legende.txt">Télécharger les noms correspondant au codes</a>
+			<a href="../file/telechargerLegende.php" target="_blank">Télécharger les noms correspondant au codes</a>
 			<h2>Les codes des activités :</h2> 
 			<?php echo tableauActivite($bdd); ?>
 			<h2>Les codes des lieux :</h2> 
@@ -24,7 +24,7 @@
 			
 			<h2>Apperçu des données:</h2>
 			
-			<a href="">Téléchargement des données</a>
+			<a href="../file/telechargerDonnees.php" target="_blank">Téléchargement des données</a>
 			<?php echo tableDonnees($bdd); ?>
 			
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -50,6 +50,12 @@
 		$('#legende').hide();
 		
 		$("#afficheLegende").click(function(event){
+			event.preventDefault();
+			$("#legende").slideToggle();
+		});
+		
+		
+		$("#generer_legende").click(function(event){
 			event.preventDefault();
 			$("#legende").slideToggle();
 		});

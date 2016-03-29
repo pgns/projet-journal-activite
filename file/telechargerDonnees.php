@@ -5,7 +5,7 @@ require '../modele/activite.modele.php';
 require '../modele/lieux.modele.php';
 require '../modele/compagnie.modele.php';
 require '../modele/dispositif.modele.php';
-/*générer un fichier txt avec le les codes correspondant aux codes*/
+/*générer un fichier csv avec les données de la table occupation*/
 //créer un fichier
 // 1 : on ouvre le fichier
 

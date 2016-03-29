@@ -26,43 +26,5 @@
 			
 			<a href="../file/telechargerDonnees.php" target="_blank">Téléchargement des données</a>
 			<?php echo tableDonnees($bdd); ?>
-			
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-			<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-			<script src="https://cdn.datatables.net/t/dt/dt-1.10.11/datatables.min.js"></script>
-			
-			
-<script>
-	$('#table').DataTable( {
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json"
-        }
-    });
-	
-	$('.table_act').DataTable( {
-        "language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json"
-        }
-    });
-	
-	
-	$(document).ready(function(){
-		$('#legende').hide();
-		
-		$("#afficheLegende").click(function(event){
-			event.preventDefault();
-			$("#legende").slideToggle();
-		});
-		
-		
-		$("#generer_legende").click(function(event){
-			event.preventDefault();
-			$("#legende").slideToggle();
-		});
-		
-	});
-</script>
-			
-		
 	</div>
 </div>

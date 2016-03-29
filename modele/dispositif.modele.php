@@ -13,6 +13,17 @@
 			return $resultat;
 		}
 		
+		/* Renvoie la liste des dispositifs*/
+		function listeDispositif($bdd){
+			$resultat = "Code du Dispositif: Nom du Dispositif:\n";
+			$requete = $bdd->query("SELECT * FROM dispositif");
+			while ($data = $requete->fetch()){
+				$resultat.=$data['CodeDispositif']."  ".$data['NomDispositif']."\n";
+			}
+			$requete->closeCursor();
+			return $resultat;
+		}
+		
 		/* Renvoie un select avec la liste des dispositifs */
 		function selectDispositif($bdd,$id,$name){
 			$resultat = "<select name=\"$name\" id=\"$id\">\n\t<option selected value=\"-1\">Sélectionnez un dispositif</option>\n";

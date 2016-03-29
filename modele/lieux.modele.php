@@ -28,7 +28,19 @@
 			$requete->closeCursor();
 			return $resultat;
 		}
-		
+	
+	/* Renvoie la liste des lieu*/
+	function listeLieu($bdd){
+			$resultat = "Code du Lieu: Nom du Lieu:\n";
+			$requete = $bdd->query("SELECT * FROM lieu");
+				while ($data = $requete->fetch()){
+				$resultat.=$data['CodeLieux']."  ".$data['NomLieux']."\n";
+			}
+			$requete->closeCursor();
+			return $resultat;
+		}	
+
+	
 		/* Renvoie un select avec la liste des lieux */
 	function selectLieu($bdd,$id,$name){
 			$resultat = "<select name=\"$name\" id=\"$id\">\n";

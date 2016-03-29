@@ -14,3 +14,6 @@ INSERT INTO `candidat`(`CodeCandidat`, `Age`, `GenreCandidat`, `LieuxEtude`, `Ni
 VALUES (003,26,'homme','Vienne','BAC+7','L1 jardinage','Celibataire',1,003);
 INSERT INTO `candidat`(`CodeCandidat`, `Age`, `GenreCandidat`, `LieuxEtude`, `NiveauEtude`, `DiplomePrep`, `EtatCivil`, `NombreEnfant`, `ID`) 
 VALUES (004,11,'chien','Paris','MatSup','CNRS','Union libre',4,004);
+
+INSERT INTO `bdd`.`chercheur` (`CodeChercheur`, `NomChercheur`, `PrenomChercheur`, `ID`) VALUES (001, 'Dupont', 'Jean', '6');
+INSERT INTO `bdd`.`chercheur` (`CodeChercheur`, `NomChercheur`, `PrenomChercheur`, `ID`) VALUES ('002', 'JM', 'prenom', '5');

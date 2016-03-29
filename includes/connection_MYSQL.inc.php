@@ -1,6 +1,7 @@
 <?php
-	session_start();
-	
+	if(!isset($_SESSION)){
+		session_start();
+	}	
 	//connexion a la BDD
 	try	{
     $bdd = new PDO('mysql:host=localhost;dbname=bdd;charset=utf8', 'root');

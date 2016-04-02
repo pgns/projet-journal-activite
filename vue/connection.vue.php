@@ -5,6 +5,11 @@
 		Insert content here			
 		-->		
 		<center>
+			<?php 
+			if (isset($msg))
+				echo "<div class=\"msg_alert\">".$msg."</div>"; 
+				
+			?>
 			<h1>Connexion :</h1>
 
 			<form action="connection.ctrl.php" method="post">
@@ -40,7 +45,7 @@
 			<label>Entrez votre age:</label>
 			<input type="number" name="age" value="20" required/><br/>
 			<label>Sélectionnez le niveau d'étude:</label>
-			<select name="dip">
+			<select name="niv">
 				<option value="Bac +1">Bac +1</option>
 				<option value="Bac +2">Bac +2</option>
 				<option value="Bac +3">Bac +3</option>
@@ -61,12 +66,15 @@
 				<option value="Diplôme médical et paramédical">Diplôme médical et paramédical</option>
 				<option value="Autre diplôme">Autre diplôme </option>
 			</select>
+			<label>Sélectionnez votre genre:</label>
+			<input type="radio" name="gender" value="femme" checked> Femme
+			<input type="radio" name="gender" value="homme"> Homme <br/>
 			<label>Sélectionnez votre état civil:</label>
 			<select name="civ">
 				<option value="Marié(e)">Marié(e)</option>
 				<option value="Pacsé(e)">Pacsé(e)</option>
 				<option value="Non marié(e) avec partenaire stable">Non marié(e) avec partenaire stable</option>
-				<option value="Non marié(e) sans partenaire stable">Non marié(e) sans partenaire stable</option>
+				<option value="Non marié(e) sans partenaire stable" selected>Non marié(e) sans partenaire stable</option>
 				<option value="Veuve, veuf">Veuve, veuf</option>
 				<option value="Divorcé">Divorcé</option>
 			</select>
@@ -75,8 +83,8 @@
 			<label>Entrez votre lieu d'étude:</label>
 			<input type="text" name="lieu" required/>
 			<script src="https://www.google.com/recaptcha/api.js?hl=fr" async defer></script>
-			<div class="g-recaptcha" data-sitekey="6Le7BxoTAAAAAIWC3WoQMB5CFsHrXRPozy2DSQ32"></div><br/>
-			<input type="submit" name="incription" value="Inscription"/>
+			<div class="g-recaptcha" data-sitekey="6LdZQBwTAAAAAB-8bWB8OUnzzn2Gdz-Spao2DJ2T"></div><br/>
+			<input type="submit" name="inscription" value="Inscription"/>
 		</form>
 	</div>
 	

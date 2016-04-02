@@ -5,6 +5,7 @@
 	require '../includes/connection_MYSQL.inc.php';
 	require '../class/utilisateur.class.php';
 	require '../modele/utilisateur.modele.php';
+
 	
 	$reponse="";
 	if((isset($username))&&(isset($password))){
@@ -65,16 +66,16 @@ function isRecaptchaValid($code, $ip = null){
 	return $json->success;
 }
 	
+function test_input($data) {
+  $data = trim($data);
+  $data = stripslashes($data);
+  $data = htmlspecialchars($data);
+  return $data;
+}	
+
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
+	include("../modele/inscriptionCandidat.modele.php");	/*Inscription du candidat*/
 	require_once('../includes/head.inc.php');
 	require_once('../vue/connection.vue.php');
 	//require_once('../includes/menu.inc.php');

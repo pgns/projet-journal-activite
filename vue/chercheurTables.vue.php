@@ -60,7 +60,8 @@
 						<label>Nom d l'activité: </label>
 						<input type="text" name="nom_activite"/>
 						<label>ID de l'activité:</label>
-						<input type="number" name="id"/><br/>
+						<div id="idActiviteAjax"></div>
+						<input type="number" name="id" id="ajoutCodeActivite"/><br/>
 						<label>Sélectionez une catégorie pour l'activité: </label>
 						<?php echo selectCategorie($bdd,"categorieActivite","cat_activite");?>
 						<label>Description de l'activité</label>
@@ -103,7 +104,8 @@
 						<label>Nom du dispositif: </label>
 						<input type="text" name="nom_dispositif" required/>
 						<label>ID du dispositif:</label>
-						<input type="number" name="id"  required/><br/>
+						<div id="idDispositifAjax"></div>
+						<input type="number" name="id"  id="ajoutCodeDispositif" required/><br/>
 						<input type="submit" name="add_dispositif" value="Ajouter">
 				</fieldset>
 			</form>

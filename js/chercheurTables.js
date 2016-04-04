@@ -4,13 +4,14 @@ $(document).ready(function(){
      });
 	
 	$("#modifierDispostif").change(function(){
-		$("#mod_disp").html("<label>ID du dispositif:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
+		$("#mod_disp").html("<label>ID du dispositif:</label><div id=\"idDispositifModifAjax\"></div><input type=\"hidden\" value=\""+$(this).val()+"\" id=\"id_disp_old\"><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\" id=\"id_disp_new\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
      });
 	 
 	 $("#modifierLieu").change(function(){
-		$("#mod_lieu").html("<label>ID du lieu:</label><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
+		$("#mod_lieu").html("<label>ID du lieu:</label><div id=\"idLieuModifAjax\"></div><input type=\"hidden\" value=\""+$(this).val()+"\" id=\"id_lieu_old\"><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\" id=\"id_lieu_new\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
      });
 	
+/*Ajax pour la modification d'activite*/	
 	$("#modifierActivite").change(function(){
 		$.ajax({
 		   url : '../modele/modifier_activite.php',
@@ -86,23 +87,8 @@ $(document).ready(function(){
 	$(".allModdifListe").hide();
 	
 	
-	/*A modifier dans le js au dessus*/
-	$("#modifierCodeLieu").bind('keyup click',function(){
-		console.log(idModifLieu);
-		console.log("sss");
-		$.ajax({
-		   url : 'more_com.php',
-		   type : 'POST',
-		   data : 'code=' + email,
-		   dataType : 'html', // On désire recevoir du HTML
-		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
-				
-		   }
-		});
-	});
-	
+	// ajax pour l'ajout du  code lieu
 	$("#ajoutCodeLieu").bind('keyup click',function(){
-		console.log();
 		$.ajax({
 		   url : '../modele/idLieuAjax.php',
 		   type : 'POST',
@@ -113,6 +99,78 @@ $(document).ready(function(){
 		   }
 		});
 	});
+	
+	//ajax pour l'ajout du code activite
+	$("#ajoutCodeActivite").bind('keyup click',function(){
+		$.ajax({
+		   url : '../modele/idActiviteAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#ajoutCodeActivite').val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idActiviteAjax").html(code_html);
+		   }
+		});
+	});
+	
+	//ajax pour la modification du code activite
+	// il faut passer avec la méthode on car le code a été ajouté par ajax donc non dispo à la fin du cargement du dom :)
+	  $("#mod_act").on('keyup click','#new_id_activite',function(){
+		console.log("Boum");
+		$.ajax({
+		   url : '../modele/idActiviteModifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#new_id_activite').val() + '&old_code=' + $("#old_id_activite").val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idActiviteModifAjax").html(code_html);
+		   }
+		});
+	});
+	
+	//ajax pour la modification du code dispositif
+	// il faut passer avec la méthode on car le code a été ajouté par ajax donc non dispo à la fin du cargement du dom :)
+	  $("#mod_disp").on('keyup click','#id_disp_new',function(){
+		$.ajax({
+		   url : '../modele/idDispositifModifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#id_disp_new').val() + '&old_code=' + $("#id_disp_old").val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idDispositifModifAjax").html(code_html);
+		   }
+		});
+	});
+	
+	//ajax pour la modification du code lieu
+	// il faut passer avec la méthode on car le code a été ajouté par ajax donc non dispo à la fin du cargement du dom :)
+	  $("#mod_lieu").on('keyup click','#id_lieu_new',function(){
+		$.ajax({
+		   url : '../modele/idLieuModifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#id_lieu_new').val() + '&old_code=' + $("#id_lieu_old").val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idLieuModifAjax").html(code_html);
+		   }
+		});
+	});
+	
+	
+	
+	//ajax pour l'ajout du code dispositif
+	$("#ajoutCodeDispositif").bind('keyup click',function(){
+		$.ajax({
+		   url : '../modele/idDispositifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#ajoutCodeDispositif').val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idDispositifAjax").html(code_html);
+		   }
+		});
+	});
+	
 	
 	// next() jquery sibling
 });

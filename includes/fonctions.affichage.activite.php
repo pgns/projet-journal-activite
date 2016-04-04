@@ -40,14 +40,13 @@
 	function afficheColone($codeCandidat,$date,$day,$bdd){
 		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
 		if(isset($table)){
-			return '<center><div>'.RetournerOccupations($table,$bdd).'</div>
-			<input type="button" name="'.convertNumToDay($day).'" value="+" onclick="">
-			</center>';
+			//return '<center><div>'.RetournerOccupations($table,$bdd).'</div><input type="button" name="'.convertNumToDay($day).'" value="+" onclick=""></center>';
+			return '<center><div>'.RetournerOccupations($table,$bdd).'</div><button class="fancybox-a">+</button></center>';
+			//<a href="CandidatRenseigneActivites.ctrl.php" id="fancybox">
 		}
 		else
-			return '<center>
-			<input type="button" name="'.convertNumToDay($day).'" value="+" onclick="">
-			</center>';
+			//return '<center><input type="button" name="'.convertNumToDay($day).'" value="+" onclick=""></center>';
+		return '<center><a href="javascript:;" class="fancybox-a"><button>+</button></a></center>';
 	}
 	
 		

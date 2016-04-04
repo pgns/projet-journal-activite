@@ -20,7 +20,7 @@
 				?>
 				</div>
 			</center>
-			<div id="modal" class="popup"></div>
+			<!--<div id="modal" class="popup"></div>-->
 		</center>
 	</div>
 </div>

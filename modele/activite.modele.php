@@ -8,7 +8,6 @@
 		$requete = "SELECT * FROM activite".$option;
 		$sth = $bdd->prepare($requete);
 		$sth->execute();
-		
 		while ($reponse = $sth->fetch(PDO::FETCH_ASSOC))
 		{
 			$listeActivites[] = new activite($reponse);

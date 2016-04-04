@@ -1,3 +1,10 @@
+
+
+
+
+
+
+
 //~ var	Lundi = parseInt('<?php echo $currentWeek["Lundi"]; ?>');
 //~ var	Mardi =  parseInt('<?php echo $currentWeek["Mardi"]; ?>');
 //~ var	Mercredi =  parseInt('<?php echo $currentWeek["Mercredi"]; ?>');

@@ -1,5 +1,22 @@
 <?php
 
+	/* Renvoie un tableau d'objet php contenant la liste des dispositifs de la BDD */
+	/* 			- Si $codeDispo est renseigné, la fonction retourne la liste complete des dispositifs ayant pour codeLieux $codeDispo. */
+	/* 			- Si $codeDispo n'est pas renseigné, la fonction retourne la liste complete des dispositifs. */
+	function get_dispositif($bdd, $codeDispositif = "%"){
+		if($codeDispositif == '%'){$option = "";}
+		else{$option = " WHERE CodeDispositif = ".$codeDispositif;}
+		$requete = "SELECT * FROM dispositif".$option;
+
+		$sth = $bdd->prepare($requete);
+		$sth->execute();
+		
+		while ($reponse = $sth->fetch(PDO::FETCH_ASSOC))
+		{
+			$listeDispositif[] = new dispositif($reponse);
+		}
+		return $listeDispositif;
+	}
 		
 		/* Renvoie le tableau de la liste des dispositifs en html*/
 		function tableauDispositif($bdd){

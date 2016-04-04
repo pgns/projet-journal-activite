@@ -1,5 +1,7 @@
-<?php foreach($_POST as $key=>$value){$$key=$value;}
-	  foreach($_GET as $key=>$value){$$key=$value;}
+<?php 
+	session_start();
+	foreach($_POST as $key=>$value){$$key=$value;}
+	foreach($_GET as $key=>$value){$$key=$value;}
 
 	$SemaineCourante = date("W");
 	if(isset($_POST['semaine']))

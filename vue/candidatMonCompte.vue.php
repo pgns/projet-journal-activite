@@ -9,24 +9,37 @@
 		<div class="all_m">
 		<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
 			<label>Entrez votre nouveau e-mail:</label>
-			<input type="text" name="mail" required/>
+			<input type="email" name="mail" required/>
 			<input type="submit" name="mod_mail" value="Modifier"/>
 		</form>
 		</div>
 		<br/><strong>Mot de passe : </strong><br/>
 		<a href="#" class="all_m_l">Modifier mon mot de passe</a>
 		<div class="all_m">
-		<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
+		<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8" class="cmxform" id ="passForm" >
 			<label>Entrez votre ancien mot de passe:</label>
 			<input type="password" name="old_mdp" required/>
 			<label>Entrez votre nouveau mot de passe:</label>
-			<input type="password" name="mdp" required/>
+			<input type="password" name="mdp" id="mdp" required/>
 			<label>Confirmez votre nouveau mot de passe:</label>
-			<input type="password" name="new_mdp" required/>
+			<input type="password" name="new_mdp" id="new_mdp" required/>
 			<input type="submit" name="mod_mdp" value="Modifier"/>
 		</form>
 		</div>
-		
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/jquery.validate.min.js"></script>
+		<script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+		<script>
+		$("#passForm").validate({
+		  rules: {
+			mdp: "required",
+			new_mdp: {
+			  equalTo: "#mdp"
+			}
+		  }
+		});
+
+		</script>
 		<br/><strong>Login :</strong>
 		<?php echo loginChercheur($bdd);?> <br/><a href="#" class="all_m_l">Modifier mon login</a>
 		<div class="all_m">

@@ -20,7 +20,9 @@
 			<script src="../js/candidat_Renseignement.activite.js" type="text/javascript"></script>
 	</head>
 	<body>
-		<h2>Activité du 21/03/2016<?php echo $date;?></h2>
+
+		<h2>Activité du <?php //echo $date;?></h2>
+
 		<br/>
 		
 			<table>

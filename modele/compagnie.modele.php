@@ -46,4 +46,16 @@
 			$resultat.="</select>";
 			return $resultat;
 		}
+		
+		function selectCompagnieSauf($bdd,$sauf,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n";
+			$requete = $bdd->query("SELECT * FROM compagnie");
+			while ($data = $requete->fetch()){
+				if ($data['CodeCompagnie'] != $sauf)
+					$resultat.="\t<option value=\"".$data['CodeCompagnie']."\">".$data['NomCompagnie']."</option>\n";
+			}
+			$requete->closeCursor();
+			$resultat.="</select>";
+			return $resultat;
+		}
 ?>

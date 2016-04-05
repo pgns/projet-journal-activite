@@ -208,7 +208,8 @@
 				<fieldset>
 					<legend>Supprimer une compagnie:</legend>
 						<label>Sélectionez une compagnie:  </label>
-						<?php echo selectCompagnie($bdd,"supprCompagnie","id");?>
+						<?php echo selectCompagnieVide($bdd,"supprCompagnie","id");?>
+						<div id="compagnieSupprAjax"></div>
 						<input type="submit" name="sup_compagnie" value="Supprimer">
 				</fieldset>		
 			</form>

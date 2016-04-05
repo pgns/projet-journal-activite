@@ -221,5 +221,20 @@ $(document).ready(function(){
 	});
 	
 	
+	//ajax pour la suppression d'une compagnie
+	$("#supprCompagnie").change(function(){
+		console.log("change");
+		$.ajax({
+		   url : '../modele/supprCompagnieAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $(this).val() + '&nom='+$("#supprCompagnie option:selected").text(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#compagnieSupprAjax").html(code_html);
+		   }
+		});
+	});
+	
+	
 	// next() jquery sibling
 });

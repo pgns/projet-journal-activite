@@ -155,6 +155,14 @@
 				else{
 					$id = test_input($_POST['id']);
 					if ($id != -1){
+						if (isset($_POST['reafecterCompagnie'])){
+							$id_new = $_POST['reafecterCompagnie'];
+							$req = $bdd->prepare('UPDATE occupation SET CodeCompagnie = :CodeCompagnie WHERE CodeCompagnie = :CodeCompagnieOld');
+							$req->execute(array(
+								'CodeCompagnie' => $id_new,
+								'CodeCompagnieOld' => $id
+							));					
+						}
 						$req = $bdd->prepare("DELETE FROM compagnie WHERE CodeCompagnie = :CodeDispositif");
 						$req->execute(array(
 							'CodeDispositif' => $id
@@ -454,14 +462,6 @@
 							$msg.=$data['NomActivite']." .</div>";
 						}
 						else{
-						/*	$req = $bdd->prepare('UPDATE activite SET NomActivite = :NomActivite, DescriptifActivite = :DescriptifActivite, CodeCategorie = :CodeCategorie, CodeActivite = :CodeActivite WHERE CodeActivite = :CodeActiviteOld');
-							$req->execute(array(
-								'NomActivite' => $nom_act,
-								'CodeActivite' => $id,
-								'CodeActiviteOld' => $id_old,
-								'DescriptifActivite' => $descr,
-								'CodeCategorie' => $cat
-							));*/
 							
 							$req = $bdd->prepare("INSERT INTO activite (NomActivite,CodeActivite,DescriptifActivite,CodeCategorie) VALUES (:NomActivite,:CodeActivite,:DescriptifActivite,:CodeCategorie)");
 							$req->execute(array(

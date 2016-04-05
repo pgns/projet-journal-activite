@@ -149,7 +149,7 @@
 				}
 			}
 			elseif(isset($_POST['sup_compagnie'])){
-				if (empty($_POST['id'])){
+				if (empty($_POST['id']) && $_POST['id'] != 0){
 					$msg = "<div class=\"msg_alert\">Il faut sélectionner une compagnie!</div>";
 				}
 				else{
@@ -167,7 +167,7 @@
 				}
 			}
 			elseif(isset($_POST['mod_dispositif'])){
-				if (empty($_POST['id']) || empty($_POST['nom_dispositif']) || $id == -1){
+				if ((empty($_POST['id']) || empty($_POST['nom_dispositif']) || $id == -1)&& $id!=0 ){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au dispositif!</div>";
 				}
 				else{
@@ -194,12 +194,23 @@
 							$msg.=$data['NomDispositif']." .</div>";
 						}
 						else{
-							$req = $bdd->prepare('UPDATE dispositif SET NomDispositif = :NomDispositif, CodeDispositif = :CodeDispositif WHERE CodeDispositif = :CodeDispositifOld');
+							$req = $bdd->prepare("INSERT INTO dispositif (NomDispositif,CodeDispositif) VALUES (:NomDispositif,:CodeDispositif)");
 							$req->execute(array(
 								'NomDispositif' => $nom_dispositif,
+								'CodeDispositif' => $id
+							));
+						/*On modifie la table des occupations*/	
+							$req = $bdd->prepare('UPDATE occupation SET CodeDispositif = :CodeDispositif WHERE CodeDispositif = :CodeDispositifOld');
+							$req->execute(array(
 								'CodeDispositifOld' => $id_old,
 								'CodeDispositif' => $id
 							));
+							
+							$req = $bdd->prepare("DELETE FROM dispositif WHERE CodeDispositif = :CodeDispositif");
+							$req->execute(array(
+								'CodeDispositif' => $id_old
+							));
+							
 							$msg = "<div class=\"msg_confirm\">Le dispositif a bien été modifiée!</div>";
 						}
 						
@@ -207,7 +218,7 @@
 				}
 			}
 			elseif(isset($_POST['mod_compagnie'])){
-				if (empty($_POST['id']) || empty($_POST['nom_compagnie']) || $id == -1){
+				if ((empty($_POST['id']) || empty($_POST['nom_compagnie']) || $id == -1 ) && $_POST['id'] != 0){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à la compagnie!</div>";
 				}
 				else{
@@ -234,12 +245,25 @@
 							$msg.=$data['NomCompagnie']." .</div>";
 						}
 						else{
-							$req = $bdd->prepare('UPDATE compagnie SET NomCompagnie = :NomDispositif, CodeCompagnie = :CodeDispositif WHERE CodeCompagnie = :CodeDispositifOld');
+							
+							$req = $bdd->prepare("INSERT INTO compagnie (NomCompagnie,CodeCompagnie) VALUES (:NomDispositif,:CodeDispositif)");
 							$req->execute(array(
 								'NomDispositif' => $nom_dispositif,
+								'CodeDispositif' => $id
+							));
+						/*On modifie la table des occupations*/	
+							$req = $bdd->prepare('UPDATE occupation SET CodeCompagnie = :CodeDispositif WHERE CodeCompagnie = :CodeDispositifOld');
+							$req->execute(array(
 								'CodeDispositifOld' => $id_old,
 								'CodeDispositif' => $id
 							));
+							
+							$req = $bdd->prepare("DELETE FROM compagnie WHERE CodeCompagnie = :CodeDispositif");
+							$req->execute(array(
+								'CodeDispositif' => $id_old
+							));
+							
+							
 							$msg = "<div class=\"msg_confirm\">La compagnie a bien été modifiée!</div>";
 						}
 						
@@ -321,13 +345,28 @@
 							$data = $requete->fetch();
 							$msg.=$data['NomLieux']." .</div>";
 						}
-						else{
-							$req = $bdd->prepare('UPDATE lieu SET NomLieux = :NomLieux, CodeLieux = :CodeLieux WHERE CodeLieux = :CodeLieuxOld');
+						else{	
+							$requete = $bdd->query("SELECT * FROM lieu WHERE CodeLieux = $id_old");
+							$data = $requete->fetch();
+						
+							$req = $bdd->prepare("INSERT INTO lieu (NomLieux,CodeLieux,CodeCategorieLieux) VALUES (:NomDispositif,:CodeDispositif,:CodeCategorieLieux)");
 							$req->execute(array(
-								'NomLieux' => $nom_lieu,
-								'CodeLieuxOld' => $id_old,
-								'CodeLieux' => $id
+								'NomDispositif' => $nom_lieu,
+								'CodeDispositif' => $id,
+								'CodeCategorieLieux' => $data['CodeCategorieLieux']
 							));
+						/*On modifie la table des occupations*/	
+							$req = $bdd->prepare('UPDATE occupation SET CodeLieux = :CodeDispositif WHERE CodeLieux = :CodeDispositifOld');
+							$req->execute(array(
+								'CodeDispositifOld' => $id_old,
+								'CodeDispositif' => $id
+							));
+							
+							$req = $bdd->prepare("DELETE FROM lieu WHERE CodeLieux = :CodeDispositif");
+							$req->execute(array(
+								'CodeDispositif' => $id_old
+							));
+							
 							$msg = "<div class=\"msg_confirm\">Le lieu a bien été modifiée!</div>";
 						}			
 					}
@@ -415,14 +454,35 @@
 							$msg.=$data['NomActivite']." .</div>";
 						}
 						else{
-							$req = $bdd->prepare('UPDATE activite SET NomActivite = :NomActivite, DescriptifActivite = :DescriptifActivite, CodeCategorie = :CodeCategorie, CodeActivite = :CodeActivite WHERE CodeActivite = :CodeActiviteOld');
+						/*	$req = $bdd->prepare('UPDATE activite SET NomActivite = :NomActivite, DescriptifActivite = :DescriptifActivite, CodeCategorie = :CodeCategorie, CodeActivite = :CodeActivite WHERE CodeActivite = :CodeActiviteOld');
 							$req->execute(array(
 								'NomActivite' => $nom_act,
 								'CodeActivite' => $id,
 								'CodeActiviteOld' => $id_old,
 								'DescriptifActivite' => $descr,
 								'CodeCategorie' => $cat
+							));*/
+							
+							$req = $bdd->prepare("INSERT INTO activite (NomActivite,CodeActivite,DescriptifActivite,CodeCategorie) VALUES (:NomActivite,:CodeActivite,:DescriptifActivite,:CodeCategorie)");
+							$req->execute(array(
+								'NomActivite' => $nom_act,
+								'CodeActivite' => $id,
+								'DescriptifActivite' => $descr,
+								'CodeCategorie' => $cat
 							));
+						/*On modifie la table des occupations*/	
+							$req = $bdd->prepare('UPDATE occupation SET CodeActivite = :CodeDispositif WHERE CodeActivite = :CodeDispositifOld');
+							$req->execute(array(
+								'CodeDispositifOld' => $id_old,
+								'CodeDispositif' => $id
+							));
+							
+							$req = $bdd->prepare("DELETE FROM activite WHERE CodeActivite = :CodeDispositif");
+							$req->execute(array(
+								'CodeDispositif' => $id_old
+							));
+							
+							
 							$msg = "<div class=\"msg_confirm\">L'activité a bien été modifiée!</div>";
 						}	
 					}

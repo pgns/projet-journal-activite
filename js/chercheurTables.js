@@ -6,7 +6,12 @@ $(document).ready(function(){
 	$("#modifierDispostif").change(function(){
 		$("#mod_disp").html("<label>ID du dispositif:</label><div id=\"idDispositifModifAjax\"></div><input type=\"hidden\" value=\""+$(this).val()+"\" id=\"id_disp_old\"><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\" id=\"id_disp_new\"><br/><label>Nom du dispositif:</label><input type=\"text\" value=\""+$("#modifierDispostif option:selected").text()+"\" name=\"nom_dispositif\" required>");
      });
-	 
+	
+	$("#modifierCompagnie").change(function(){
+		$("#mod_compagnie").html("<label>ID de la compagnie:</label><div id=\"idCompagnieModifAjax\"></div><input type=\"hidden\" value=\""+$(this).val()+"\" id=\"id_compagnie_old\"><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\" id=\"id_compagnie_new\"><br/><label>Nom de la compagnie:</label><input type=\"text\" value=\""+$("#modifierCompagnie option:selected").text()+"\" name=\"nom_compagnie\" required>");
+     });
+
+	
 	 $("#modifierLieu").change(function(){
 		$("#mod_lieu").html("<label>ID du lieu:</label><div id=\"idLieuModifAjax\"></div><input type=\"hidden\" value=\""+$(this).val()+"\" id=\"id_lieu_old\"><input type=\"number\" name=\"id\" value=\""+$(this).val()+"\" id=\"id_lieu_new\"><br/><label>Nom du lieu:</label><input type=\"text\" value=\""+$("#modifierLieu option:selected").text()+"\" name=\"nom_lieu\" required>");
      });
@@ -31,6 +36,7 @@ $(document).ready(function(){
 		$("#modifDisp").hide();
 		$("#modifAct").hide();
 		$("#modifCat").hide();
+		$("#modifCompagnie").hide();
     });
 	
 	$("#modDisp").click(function(event){
@@ -39,6 +45,7 @@ $(document).ready(function(){
 		$("#modifDisp").slideToggle();
 		$("#modifAct").hide();
 		$("#modifCat").hide();
+		$("#modifCompagnie").hide();
     });
 	
 	$("#modAct").click(function(event){
@@ -47,6 +54,7 @@ $(document).ready(function(){
 		$("#modifDisp").hide();
 		$("#modifAct").slideToggle();
 		$("#modifCat").hide();
+		$("#modifCompagnie").hide();
     });
 
 	$("#modCat").click(function(event){
@@ -55,6 +63,16 @@ $(document).ready(function(){
 		$("#modifDisp").hide();
 		$("#modifAct").hide();
 		$("#modifCat").slideToggle();
+		$("#modifCompagnie").hide();
+    });
+	
+	$("#modCompagnie").click(function(event){
+		event.preventDefault();
+        $("#modifLieu").hide();
+		$("#modifDisp").hide();
+		$("#modifAct").hide();
+		$("#modifCat").hide();
+		$("#modifCompagnie").slideToggle();
     });
 	
 	$("#afficherCat").click(function(event){
@@ -76,6 +94,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		$("#afficheDisp").slideToggle();
     });
+	
+	$("#afficherCompagnie").click(function(event){
+		event.preventDefault();
+		$("#afficheCompagnie").slideToggle();
+    });
+	
 	
 	$(".ss_cat").click(function(event){
 		event.preventDefault();
@@ -156,7 +180,19 @@ $(document).ready(function(){
 		});
 	});
 	
-	
+	//ajax pour la modification du code compagnie
+	// il faut passer avec la méthode on car le code a été ajouté par ajax donc non dispo à la fin du cargement du dom :)
+	  $("#mod_compagnie").on('keyup click','#id_compagnie_new',function(){
+		$.ajax({
+		   url : '../modele/idCompagnieModifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#id_compagnie_new').val() + '&old_code=' + $("#id_compagnie_old").val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idCompagnieModifAjax").html(code_html);
+		   }
+		});
+	});
 	
 	//ajax pour l'ajout du code dispositif
 	$("#ajoutCodeDispositif").bind('keyup click',function(){
@@ -167,6 +203,19 @@ $(document).ready(function(){
 		   dataType : 'html', // On désire recevoir du HTML
 		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
 				$("#idDispositifAjax").html(code_html);
+		   }
+		});
+	});
+	
+	//ajax pour l'ajout du code compagnie
+	$("#ajoutCodeCompagnie").bind('keyup click',function(){
+		$.ajax({
+		   url : '../modele/idCompagnieAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $('#ajoutCodeCompagnie').val(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#idCompagnieAjax").html(code_html);
 		   }
 		});
 	});

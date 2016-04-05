@@ -102,6 +102,34 @@
 					
 				}
 			}
+			elseif(isset($_POST['add_compagnie'])){
+				if (empty($_POST['nom_compagnie']) || empty($_POST['id_compagnie'])){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à la compagnie!</div>";
+				}
+				else{
+					$nom_dispositif = test_input($_POST['nom_compagnie']);
+					$id = test_input($_POST['id_compagnie']);
+					/*On vérifie si l'id n'est pas déjà présent*/
+					$requete = $bdd->query("SELECT COUNT(*) AS num FROM compagnie WHERE CodeCompagnie = $id");
+					$data = $requete->fetch();
+					if($data['num']!= 0){
+						$requete = $bdd->query("SELECT * FROM compagnie WHERE CodeCompagnie = $id");
+						$msg ="<div class=\"msg_alert\">Impossible de rajouter la compagnie l'id $id est déà affecté à la compagnie ";
+						$data = $requete->fetch();
+						$msg.=$data['NomCompagnie']." .</div>";
+					}
+					else{
+					/*On insère la compagnie dans la bdd*/
+						$req = $bdd->prepare("INSERT INTO compagnie (CodeCompagnie,NomCompagnie) VALUES (:CodeDispositif,:NomDispositif)");
+						$req->execute(array(
+							'CodeDispositif' => $id,
+							'NomDispositif' => $nom_dispositif
+						));
+						$msg = "<div class=\"msg_confirm\">La compagnie '$nom_dispositif' a bien été rajouté!</div>";
+					}
+					
+				}
+			}
 			elseif(isset($_POST['sup_dispositif'])){
 				if (empty($_POST['id'])){
 					$msg = "<div class=\"msg_alert\">Il faut sélectionner un dispositf!</div>";
@@ -117,6 +145,24 @@
 					}
 					else{
 						$msg = "<div class=\"msg_alert\">Il faut sélectionner un dispositf!</div>";
+					}
+				}
+			}
+			elseif(isset($_POST['sup_compagnie'])){
+				if (empty($_POST['id'])){
+					$msg = "<div class=\"msg_alert\">Il faut sélectionner une compagnie!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					if ($id != -1){
+						$req = $bdd->prepare("DELETE FROM compagnie WHERE CodeCompagnie = :CodeDispositif");
+						$req->execute(array(
+							'CodeDispositif' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">La compagnie a bien été supprimé</div>";
+					}
+					else{
+						$msg = "<div class=\"msg_alert\">Il faut sélectionner une compagnie!</div>";
 					}
 				}
 			}
@@ -155,6 +201,46 @@
 								'CodeDispositif' => $id
 							));
 							$msg = "<div class=\"msg_confirm\">Le dispositif a bien été modifiée!</div>";
+						}
+						
+					}
+				}
+			}
+			elseif(isset($_POST['mod_compagnie'])){
+				if (empty($_POST['id']) || empty($_POST['nom_compagnie']) || $id == -1){
+					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à la compagnie!</div>";
+				}
+				else{
+					$id = test_input($_POST['id']);
+					$id_old = test_input($_POST['id_old']);
+					$nom_dispositif = test_input($_POST['nom_compagnie']);
+					if ($id == $id_old){
+						/*L'id ne change pas*/
+						$req = $bdd->prepare('UPDATE compagnie SET NomCompagnie = :NomDispositif WHERE CodeCompagnie = :CodeDispositif');
+						$req->execute(array(
+							'NomDispositif' => $nom_dispositif,
+							'CodeDispositif' => $id
+						));
+						$msg = "<div class=\"msg_confirm\">La compagnie a bien été modifiée!</div>";
+					}
+					else{
+						/*L'id change, on vérifie si on n'écrase pas un autre dispositif*/
+						$requete = $bdd->query("SELECT COUNT(*) AS num FROM compagnie WHERE CodeCompagnie = $id");
+						$data = $requete->fetch();
+						if($data['num']!= 0){
+							$requete = $bdd->query("SELECT * FROM compagnie WHERE CodeCompagnie = $id");
+							$msg ="<div class=\"msg_alert\">Impossible de mettre à jour la compagnie l'id $id est déà affecté à la compagnie ";
+							$data = $requete->fetch();
+							$msg.=$data['NomCompagnie']." .</div>";
+						}
+						else{
+							$req = $bdd->prepare('UPDATE compagnie SET NomCompagnie = :NomDispositif, CodeCompagnie = :CodeDispositif WHERE CodeCompagnie = :CodeDispositifOld');
+							$req->execute(array(
+								'NomDispositif' => $nom_dispositif,
+								'CodeDispositifOld' => $id_old,
+								'CodeDispositif' => $id
+							));
+							$msg = "<div class=\"msg_confirm\">La compagnie a bien été modifiée!</div>";
 						}
 						
 					}

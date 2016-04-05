@@ -6,6 +6,7 @@
 	require '../modele/activite.modele.php';
 	require '../modele/categorieActivite.modele.php';
 	require '../modele/dispositif.modele.php';
+	require '../modele/compagnie.modele.php';
 
 	require_once('../includes/head.inc.php');
 ?>	

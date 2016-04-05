@@ -22,4 +22,28 @@
 			$requete->closeCursor();
 			return $resultat;
 		}
+		
+		/* Renvoie un select avec la liste des compagnies */
+		function selectCompagnieVide($bdd,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n\t<option selected value=\"-1\">Sélectionnez une compagnie</option>\n";
+			$requete = $bdd->query("SELECT * FROM compagnie");
+			while ($data = $requete->fetch()){
+				$resultat.="\t<option value=\"".$data['CodeCompagnie']."\">".$data['NomCompagnie']."</option>\n";
+			}
+			$requete->closeCursor();
+			$resultat.="</select>";
+			return $resultat;
+		}
+		
+		/* Renvoie un select avec la liste des compagnies */
+		function selectCompagnie($bdd,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n";
+			$requete = $bdd->query("SELECT * FROM compagnie");
+			while ($data = $requete->fetch()){
+				$resultat.="\t<option value=\"".$data['CodeCompagnie']."\">".$data['NomCompagnie']."</option>\n";
+			}
+			$requete->closeCursor();
+			$resultat.="</select>";
+			return $resultat;
+		}
 ?>

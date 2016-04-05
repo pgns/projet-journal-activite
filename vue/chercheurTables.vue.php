@@ -173,5 +173,47 @@
 				</fieldset>		
 			</form>
 		</section>
+		
+		<h2>La liste des personnes présentes</h2>
+		<a href="#" id="afficherCompagnie">Afficher la liste des personnes présentes</a><br/>
+		<section id="afficheCompagnie" class="allAfficheListe">
+			<?php echo tableauCompagnie($bdd)?>
+		</section>
+		<a href="#" id="modCompagnie">Modifier la liste des personnes présentes</a><br/>
+		<section id="modifCompagnie" class="allModdifListe">
+			<br/><a href="#" class="margin_left_30 ss_cat">Ajouter une compagnie</a>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
+				<fieldset>
+					<legend>Ajouter une compagnie:</legend>
+						<label>Nom de la compagnie: </label>
+						<input type="text" name="nom_compagnie"/>
+						<label>ID de la compagnie:</label>
+						<div id="idCompagnieAjax"></div>
+						<input type="number" id="ajoutCodeCompagnie" name="id_compagnie"/><br/>
+						<input type="submit" name="add_compagnie" value="Ajouter">
+				</fieldset>
+			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Modifier une compagnie</a>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
+				<fieldset>
+					<legend>Modifier une compagnie:</legend>
+						<label>Sélectionez une compaagnie: </label>
+						<?php echo selectCompagnieVide($bdd,"modifierCompagnie","id_old");?>
+						<div id="mod_compagnie"></div>
+						<input type="submit" name="mod_compagnie" value="Modifier"><br/>
+				</fieldset>
+			</form>
+			<br/><a href="#" class="margin_left_30 ss_cat">Supprimer une compagnie</a>
+			<form action="<?php echo $_SERVER["PHP_SELF"];?>" method="post" accept-charset="UTF-8">
+				<fieldset>
+					<legend>Supprimer une compagnie:</legend>
+						<label>Sélectionez une compagnie:  </label>
+						<?php echo selectCompagnie($bdd,"supprCompagnie","id");?>
+						<input type="submit" name="sup_compagnie" value="Supprimer">
+				</fieldset>		
+			</form>
+		</section>
+		
+		
 	</div>
 </div>

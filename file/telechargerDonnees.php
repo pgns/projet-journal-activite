@@ -12,11 +12,11 @@ require '../modele/dispositif.modele.php';
 $fichierCSV = fopen('../file/donnees.csv', 'a');
 ftruncate($fichierCSV,0);
 $delimiter = ";";
-$entete = array( "Début" , "Fin" , "Code Activité" , "Code Lieu" , "Code Compagnie" , "Code Dispositif" , "Code Candidat"); 
+$entete = array( "Début" , "Fin" , "Durée", "Code Activité" , "Code Lieu" , "Code Compagnie" , "Code Dispositif" , "Code Candidat"); 
 fputcsv($fichierCSV,$entete,$delimiter);
-$requete = $bdd->query("SELECT * FROM occupation");
+$requete = $bdd->query("SELECT *, TIMEDIFF(HeureFin,HeureDebut) AS dure FROM occupation");
 while ($data = $requete->fetch()){
-	$res = array($data['HeureDebut'] , $data['HeureFin'], $data['CodeActivite'], $data['CodeLieux'] , $data['CodeCompagnie'] , $data['CodeDispositif'] , $data['CodeCandidat']);
+	$res = array($data['HeureDebut'] , $data['HeureFin'], $data['dure'], $data['CodeActivite'], $data['CodeLieux'] , $data['CodeCompagnie'] , $data['CodeDispositif'] , $data['CodeCandidat']);
 	fputcsv($fichierCSV,$res,$delimiter);
 }
 $requete->closeCursor();

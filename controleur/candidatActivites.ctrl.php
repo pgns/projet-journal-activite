@@ -8,6 +8,8 @@
 		$Semaine = $_POST['semaine'];
 	else
 	$Semaine=null;	
+	
+	include('../includes/connection_MYSQL.inc.php');
 	require_once('../includes/fonctions.date.php');
 	require_once('../includes/fonctions.affichage.activite.php');
 	
@@ -17,7 +19,7 @@
 	
 
 	require_once('../includes/head.candidat.php');
-	require_once('../vue/candidatActivites.vue.php');			
+	require_once('../vue/candidatActivites.vue.php');
 	require_once('../includes/CandidatSidebar.inc.php');
 	require_once('../includes/footer.inc.php');
 ?>

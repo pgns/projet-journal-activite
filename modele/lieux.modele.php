@@ -65,4 +65,16 @@
 			return $resultat;
 	}
 	
+		/* Renvoie un select avec la liste des lieux sauf*/
+	function selectLieuSauf($bdd,$sauf,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n";
+			$requete = $bdd->query("SELECT * FROM lieu");
+			while ($data = $requete->fetch()){
+				if ($data['CodeLieux'] != $sauf)
+					$resultat.="\t<option value=\"".$data['CodeLieux']."\">".$data['NomLieux']."</option>\n";
+			}
+			$resultat.="</select>";
+			$requete->closeCursor();
+			return $resultat;
+	}
 ?>

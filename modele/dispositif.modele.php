@@ -52,5 +52,18 @@
 			$resultat.="</select>";
 			return $resultat;
 		}
+		
+		/* Renvoie un select avec la liste des dispositifs sauf*/
+		function selectDispositifSauf($bdd,$sauf,$id,$name){
+			$resultat = "<select name=\"$name\" id=\"$id\">\n";
+			$requete = $bdd->query("SELECT * FROM dispositif");
+			while ($data = $requete->fetch()){
+				if ($data['CodeDispositif'] != $sauf)
+					$resultat.="\t<option value=\"".$data['CodeDispositif']."\">".$data['NomDispositif']."</option>\n";
+			}
+			$requete->closeCursor();
+			$resultat.="</select>";
+			return $resultat;
+		}
 	
 ?>

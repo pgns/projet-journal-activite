@@ -1,5 +1,5 @@
 <?php
-/* Ajax pour vérifier si l'id du dispositif est déjà pri*/
+/* Ajax pour vérifier réafecter la compagnie*/
 require '../includes/connection_MYSQL.inc.php';
 require './compagnie.modele.php';
 

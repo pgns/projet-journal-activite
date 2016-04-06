@@ -131,12 +131,20 @@
 				}
 			}
 			elseif(isset($_POST['sup_dispositif'])){
-				if (empty($_POST['id'])){
+				if (empty($_POST['id']) && $_POST['id'] != 0){
 					$msg = "<div class=\"msg_alert\">Il faut sélectionner un dispositf!</div>";
 				}
 				else{
 					$id = test_input($_POST['id']);
 					if ($id != -1){
+						if (isset($_POST['reafecterDispositif'])){
+							$id_new = $_POST['reafecterDispositif'];
+							$req = $bdd->prepare('UPDATE occupation SET CodeDispositif = :CodeDispositif WHERE CodeDispositif = :CodeDispositifOld');
+							$req->execute(array(
+								'CodeDispositif' => $id_new,
+								'CodeDispositifOld' => $id
+							));					
+						}
 						$req = $bdd->prepare("DELETE FROM dispositif WHERE CodeDispositif = :CodeDispositif");
 						$req->execute(array(
 							'CodeDispositif' => $id
@@ -315,6 +323,14 @@
 				else{
 					$id = test_input($_POST['id']);
 					if ($id != -1){
+						if (isset($_POST['reafecterLieu'])){
+							$id_new = $_POST['reafecterLieu'];
+							$req = $bdd->prepare('UPDATE occupation SET CodeLieux = :CodeLieux WHERE CodeLieux = :CodeLieuxOld');
+							$req->execute(array(
+								'CodeLieux' => $id_new,
+								'CodeLieuxOld' => $id
+							));					
+						}
 						$req = $bdd->prepare("DELETE FROM lieu WHERE CodeLieux = :CodeLieux");
 						$req->execute(array(
 							'CodeLieux' => $id
@@ -419,6 +435,14 @@
 				else{
 					$id = test_input($_POST['id']);
 					if ($id != -1){
+						if (isset($_POST['reafecterActivite'])){
+							$id_new = $_POST['reafecterActivite'];
+							$req = $bdd->prepare('UPDATE occupation SET CodeActivite = :CodeActivite WHERE CodeActivite = :CodeActiviteOld');
+							$req->execute(array(
+								'CodeActivite' => $id_new,
+								'CodeActiviteOld' => $id
+							));					
+						}
 						$req = $bdd->prepare("DELETE FROM activite WHERE CodeActivite = :CodeActivite");
 						$req->execute(array(
 							'CodeActivite' => $id

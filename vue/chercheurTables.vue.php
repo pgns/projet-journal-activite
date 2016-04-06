@@ -84,7 +84,8 @@
 				<fieldset>
 					<legend>Supprimer une activité:</legend>
 						<label>Sélectionez une activité:  </label>
-						<?php echo selectActivite($bdd,"idmod","id");?>
+						<?php echo selectActiviteVide($bdd,"supprActivite","id");?>
+						<div id="activiteSupprAjax"></div>
 						<input type="submit" name="sup_activite" value="Supprimer">
 				</fieldset>		
 			</form>
@@ -124,7 +125,8 @@
 				<fieldset>
 					<legend>Supprimer un dispositif:</legend>
 						<label>Sélectionez un dispositif:  </label>
-						<?php echo selectDispositif($bdd,"iddisp2","id");?>
+						<?php echo selectDispositif($bdd,"supprDispositif","id");?>
+						<div id="dispositifSupprAjax"></div>
 						<input type="submit" name="sup_dispositif" value="Supprimer">
 				</fieldset>		
 			</form>
@@ -168,7 +170,8 @@
 				<fieldset>
 					<legend>Supprimer un lieu & transport:</legend>
 						<label>Sélectionez un lieu:  </label>
-						<?php echo selectLieu($bdd,"supprLieu","id");?>
+						<?php echo selectLieuVide($bdd,"supprLieu","id");?>
+						<div id="lieuSupprAjax"></div>
 						<input type="submit" name="sup_lieu" value="Supprimer">
 				</fieldset>		
 			</form>

@@ -223,7 +223,6 @@ $(document).ready(function(){
 	
 	//ajax pour la suppression d'une compagnie
 	$("#supprCompagnie").change(function(){
-		console.log("change");
 		$.ajax({
 		   url : '../modele/supprCompagnieAjax.php',
 		   type : 'POST',
@@ -235,6 +234,43 @@ $(document).ready(function(){
 		});
 	});
 	
+	//ajax pour la suppression d'un lieu
+	$("#supprLieu").change(function(){
+		$.ajax({
+		   url : '../modele/supprLieuAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $(this).val() + '&nom='+$("#supprLieu option:selected").text(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#lieuSupprAjax").html(code_html);
+		   }
+		});
+	});
 	
-	// next() jquery sibling
+	//ajax pour la suppression d'un dispositif
+	$("#supprDispositif").change(function(){
+		$.ajax({
+		   url : '../modele/supprDispositifAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $(this).val() + '&nom='+$("#supprDispositif option:selected").text(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#dispositifSupprAjax").html(code_html);
+		   }
+		});
+	});
+	
+	//ajax pour la suppression d'un dispositif
+	$("#supprActivite").change(function(){
+		$.ajax({
+		   url : '../modele/supprActiviteAjax.php',
+		   type : 'POST',
+		   data : 'code=' + $(this).val() + '&nom='+$("#supprActivite option:selected").text(),
+		   dataType : 'html', // On désire recevoir du HTML
+		   success : function(code_html, statut){ // code_html contient le HTML renvoyé
+				$("#activiteSupprAjax").html(code_html);
+		   }
+		});
+	});
+
 });

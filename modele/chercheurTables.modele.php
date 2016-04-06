@@ -75,7 +75,7 @@
 				}
 			}
 			elseif(isset($_POST['add_dispositif'])){
-				if (empty($_POST['nom_dispositif']) || empty($_POST['id'])){
+				if (empty($_POST['nom_dispositif']) || (empty($_POST['id']) && $_POST['id'] != 0)){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au dispositf!</div>";
 				}
 				else{
@@ -103,7 +103,7 @@
 				}
 			}
 			elseif(isset($_POST['add_compagnie'])){
-				if (empty($_POST['nom_compagnie']) || empty($_POST['id_compagnie'])){
+				if (empty($_POST['nom_compagnie']) || (empty($_POST['id_compagnie']) && $_POST['id'] != 0) ){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à la compagnie!</div>";
 				}
 				else{
@@ -287,7 +287,7 @@
 				}
 			}
 			elseif(isset($_POST['add_lieu'])){
-				if (empty($_POST['nom_lieu']) || empty($_POST['id_lieu'])){
+				if (empty($_POST['nom_lieu']) || (empty($_POST['id_lieu']) && $_POST['id_lieu'] != 0)){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au lieu!</div>";
 				}
 				else{
@@ -317,7 +317,7 @@
 				}
 			}
 			elseif(isset($_POST['sup_lieu'])){
-				if (empty($_POST['id'])){
+				if (empty($_POST['id']) && $_POST['id'] != 0){
 					$msg = "<div class=\"msg_alert\">Il faut sélectionner un lieu!</div>";
 				}
 				else{
@@ -343,7 +343,7 @@
 				}
 			}
 			elseif(isset($_POST['mod_lieu'])){
-				if (empty($_POST['id']) || empty($_POST['nom_lieu']) || $id == -1){
+				if ((empty($_POST['id']) && $_POST['id'] != 0) || empty($_POST['nom_lieu']) || $id == -1){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id au lieu!</div>";
 				}
 				else{
@@ -397,7 +397,7 @@
 				}
 			}
 			elseif(isset($_POST['add_activite'])){
-				if (empty($_POST['nom_activite']) || empty($_POST['id'])){
+				if (empty($_POST['nom_activite']) || (empty($_POST['id']) && $_POST['id'])){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à l'activité!</div>";
 				}
 				else{
@@ -429,7 +429,7 @@
 				}
 			}
 			elseif(isset($_POST['sup_activite'])){
-				if (empty($_POST['id'])){
+				if (empty($_POST['id']) && $_POST['id'] != 0){
 					$msg = "<div class=\"msg_alert\">Il faut sélectionner une activite!</div>";
 				}
 				else{
@@ -455,7 +455,7 @@
 				}
 			}
 			elseif(isset($_POST['mod_activite'])){ 
-				if (empty($_POST['id']) || empty($_POST['nom_act'])){
+				if ((empty($_POST['id']) && $_POST['id'] != 0) || empty($_POST['nom_act'])){
 					$msg = "<div class=\"msg_alert\">Il faut donner un nom et un id à l'activité!</div>";
 				}
 				else{

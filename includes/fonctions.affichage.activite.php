@@ -36,34 +36,88 @@
 		return $s;
 	}
 	
+	function convertHoursToSecond($hours){
+		$data = explode(':',$hours);
+		//var_dump($data);
+		return ($data[0]*60*60) + ($data[1]*60);
+	}
 	
-	function afficheColone($codeCandidat,$date,$day,$bdd){
+	function convertSecondToTop($debutSeconde){
+		return (($debutSeconde*100)/86340)*3+60;
+	}
+	
+	function calculheight($debutSeconde,$finSeconde){
+		return ((($finSeconde-$debutSeconde)*100)/86340)*3;
+	}
+	
+	function afficheOccupations($table,$bdd,$decale){
+		$s = ' ';
+		foreach($table as $occupation){
+			
+			$debut = convertDateTimeToHours($occupation['HeureDebut']);
+			$debutSeconde = convertHoursToSecond($debut);
+			
+			$fin = convertDateTimeToHours($occupation['HeureFin']);
+			$finSeconde = convertHoursToSecond($fin);
+			
+			$top = convertSecondToTop($debutSeconde);
+			$height = calculheight($debutSeconde,$finSeconde);
+			//var_dump($height);
+			
+			$activite = convertCodeToNomActivite($occupation['CodeActivite'],$bdd);
+			if($height >= 5){
+				$s=$s.'<div class="celluleOccup" style="margin-left:'.$decale.'%;top:'.$top.'%;height:'.$height.'%;">';
+				$s=$s.$debut.'-';	
+				$s=$s.$fin.'<br>';	
+				//~ $s=$s.$height.'<br>';	
+				$s=$s.$activite ;	
+				$s=$s.'</div>';
+			}
+			else{
+				$s=$s.'<div class="celluleOccup" style="margin-left:'.$decale.'%;top:'.$top.'%;height:'.$height.'%;">';
+				//~ $s=$s.$height.'<br>';	
+				$s=$s.$activite ;	
+				$s=$s.'</div>';
+			}
+				
+		}
+		return $s;
+	}
+	
+	
+	//~ function afficheColone($codeCandidat,$date,$day,$bdd){
+		//~ $table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
+		//~ if(isset($table)){
+			//~ return '<center><div>'.RetournerOccupations($table,$bdd).'</div><button class="fancybox-a">+</button></center>';
+		//~ }
+		//~ else
+		//~ return '<center><a href="javascript:;" class="fancybox-a"><button>+</button></a></center>';
+	//~ }
+	
+	function afficheColone($codeCandidat,$date,$day,$bdd,$decale){
 		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
 		if(isset($table)){
-			//return '<center><div>'.RetournerOccupations($table,$bdd).'</div><input type="button" name="'.convertNumToDay($day).'" value="+" onclick=""></center>';
-			return '<center><div>'.RetournerOccupations($table,$bdd).'</div><button class="fancybox-a">+</button></center>';
-			//<a href="CandidatRenseigneActivites.ctrl.php" id="fancybox">
+			return afficheOccupations($table,$bdd,$decale);
 		}
 		else
-			//return '<center><input type="button" name="'.convertNumToDay($day).'" value="+" onclick=""></center>';
 		return '<center><a href="javascript:;" class="fancybox-a"><button>+</button></a></center>';
 	}
 	
 		
 	function print_table($weekaffichage,$weekquery,$id,$bdd){
 		$codeCandidat = renvoyerCodeCandidatfromCodetilisateur($id,$bdd);
-		echo '<table>';
-		echo '<tr>';
-		foreach($weekaffichage as $key => $value){
-			echo '<div class="coloneOccup"><td><center>'.$value.'</center></td></div>';
+		echo '<div class="days">';
+		foreach($weekaffichage as $key => $value){ //Affiche entete
+			echo '<div class="coloneOccupTitle"><center>'.$value.'</center></div>';
 		}
-		echo '</tr><tr>';
+		echo '</div class="occupationContent">';
+		$cpt = 0;
 		foreach($weekquery as $key => $value){
-			echo'<div class="coloneOccup"><td id='.convertNumToDay($key).'>'.afficheColone($codeCandidat,$value,$key,$bdd).'</td></div>';
-			
+			$decale = $cpt * 14.28;
+			echo afficheColone($codeCandidat,$value,$key,$bdd,$decale);
+			$cpt++;
 		}
-		echo'</tr>';
-		echo'</table>';
+		echo'</div>';
 	}
 	
 	?>

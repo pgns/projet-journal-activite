@@ -2272,11 +2272,13 @@
 		position: relative;
 		background-color: #fff;
 		background-image: url("images/bg02.png");
+		height : 100%;
 	}
 
 		#content > .inner {
 			position: relative;
 			z-index: 1;
+			height : 100%;
 		}
 
 /* Copyright */
@@ -2445,6 +2447,7 @@
 
 					max-width: 1038px;
 					padding-bottom: 6em;
+					height : 100%;
 				}
 
 		/* Sidebar */

@@ -10,7 +10,7 @@
 				<?PHP 
 					genererChoixSemaine($Week,date("Y"));
 				?>
-				<div id="table">
+				<div id="tableEdt">
 				<?php
 					print_table($currentWeek,$queryWeek,$_SESSION['id'],$bdd);		
 				

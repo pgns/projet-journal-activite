@@ -192,7 +192,7 @@ $(function(){
         $("#gen_new_content").dialog({
             bgiframe: true,
             resizable: true,
-            height:200,
+            height:800,
             width:500,
             modal: true,
             beforeclose: function(event, ui) {
@@ -440,7 +440,7 @@ $("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;
             $("#dialog").dialog({
                 bgiframe: true,
                 resizable: true,
-                height:140,
+                height:800,
                 width:500,
                 modal: true,
                 overlay: {
@@ -481,7 +481,7 @@ $("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;
                         $("#dialog").dialog({
                             bgiframe: true,
                             resizable: true,
-                            height:140,
+                            height:200,
                             modal: true,
                             beforeclose: function(event, ui) {
                                 $(this).dialog('destroy');
@@ -520,7 +520,7 @@ $("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;
         $("#dialog").dialog({
             bgiframe: true,
             resizable: true,
-            height:140,
+            height:400,
             width:500,
             modal: true,
             overlay: {
@@ -561,7 +561,7 @@ $("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;
                     $("#dialog").dialog({
                         bgiframe: true,
                         resizable: true,
-                        height:140,
+                        height:200,
                         modal: true,
                         beforeclose: function(event, ui) {
                             $(this).dialog('destroy');

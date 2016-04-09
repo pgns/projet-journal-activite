@@ -16,24 +16,43 @@
 		return $table;
 	}
 	
-	function convertCodeToNomActivite($codeActivite,$bdd){
-		$sql = 'SELECT NomActivite FROM activite WHERE CodeActivite="'.$codeActivite.'"';
-		$res = $bdd->query($sql);
-		$data = $res->fetch();
-		return $data['NomActivite'];
+	function print_table($weekquery,$id,$bdd){
+		$codeCandidat = renvoyerCodeCandidatfromCodetilisateur($id,$bdd);
+		foreach($weekquery as $key => $value){
+			echo '<td valign="top" class="other_day calendar_td">';
+			echo afficheColone($codeCandidat,$value,$key,$bdd);
+			echo'</td>';
+		}
 	}
 	
-	function RetournerOccupations($table,$bdd){
-		$s = '<table>';
-		foreach($table as $occupation){
-			$s=$s.'<tr><td><center><div class="celluleOccup">';
-			$s=$s. convertDateTimeToHours($occupation['HeureDebut']).'-';	
-			$s=$s. convertDateTimeToHours($occupation['HeureFin']).'<br>';	
-			$s=$s. convertCodeToNomActivite($occupation['CodeActivite'],$bdd);	
-			$s=$s.'</div></tr></td></center>';	
+	function afficheColone($codeCandidat,$date,$day,$bdd){
+		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
+		if(isset($table)){
+			return afficheOccupations($table,$bdd);
 		}
-		$s=$s.'</table>';
-		return $s;
+		else
+		return '';
+	}
+	
+	function generateStyle($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureDebut']);
+		$data = explode(':',$hours);
+		
+		$depSec = $data[0]*60*60 + $data[1]*60;
+		
+		$hoursf = convertDateTimeToHours($occupation['HeureFin']);
+		$dataf = explode(':',$hoursf);
+		
+		$finSec = $dataf[0]*60*60 + $dataf[1]*60;
+		$dureeSec = $finSec - $depSec;
+		
+		//var depart_en_sec=(((margin_top/10)/4-1)*60)*60;
+		//var duree_en_sec=(((height_css_value/10)/4)*60)*60;
+		
+		$margin_top = ((($depSec/60)/60)*4)*10;
+		$height = ((($dureeSec/60)/60)*4)*10;  
+		
+		return 'height:'.$height.'px; margin-top:'.$margin_top.'px;';      
 	}
 	
 	function convertHoursToSecond($hours){
@@ -42,82 +61,73 @@
 		return ($data[0]*60*60) + ($data[1]*60);
 	}
 	
-	function convertSecondToTop($debutSeconde){
-		return (($debutSeconde*100)/86340)*3+60;
+	function retournerHeureDebut($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureDebut']);
+		$data = explode(':',$hours);
+		return $data[0];
 	}
 	
-	function calculheight($debutSeconde,$finSeconde){
-		return ((($finSeconde-$debutSeconde)*100)/86340)*3;
+	function retournerMinuteDebut($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureDebut']);
+		$data = explode(':',$hours);
+		return $data[1];
 	}
 	
-	function afficheOccupations($table,$bdd,$decale){
-		$s = ' ';
+	function retournerHeureFin($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureFin']);
+		$data = explode(':',$hours);
+		return $data[0];
+	}
+	
+	function retournerMinuteFin($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureFin']);
+		$data = explode(':',$hours);
+		return $data[1];
+	}
+	
+	function convertCodeToNomActivite($codeActivite,$bdd){
+		$sql = 'SELECT NomActivite FROM activite WHERE CodeActivite="'.$codeActivite.'"';
+		$res = $bdd->query($sql);
+		$data = $res->fetch();
+		return $data['NomActivite'];
+	}
+			
+	function convertCodeToNomLieu($CodeLieux,$bdd){
+		$sql = 'SELECT NomLieux FROM lieu WHERE CodeLieux="'.$CodeLieux.'"';
+		$res = $bdd->query($sql);
+		$data = $res->fetch();
+		return $data['NomLieux'];
+	}
+	
+	function convertCodeToNomCompagnie($CodeCompagnie,$bdd){
+		$sql = 'SELECT NomCompagnie FROM compagnie WHERE CodeCompagnie="'.$CodeCompagnie.'"';
+		$res = $bdd->query($sql);
+		$data = $res->fetch();
+		return $data['NomCompagnie'];
+	} 
+	
+	function convertCodeToNomDispositif($CodeDispositif,$bdd){
+		$sql = 'SELECT NomDispositif FROM dispositif WHERE CodeDispositif="'.$CodeDispositif.'"';
+		$res = $bdd->query($sql);
+		$data = $res->fetch();
+		return $data['NomDispositif'];
+	}
+	
+	function afficheOccupations($table,$bdd){
 		foreach($table as $occupation){
-			
-			$debut = convertDateTimeToHours($occupation['HeureDebut']);
-			$debutSeconde = convertHoursToSecond($debut);
-			
-			$fin = convertDateTimeToHours($occupation['HeureFin']);
-			$finSeconde = convertHoursToSecond($fin);
-			
-			$top = convertSecondToTop($debutSeconde);
-			$height = calculheight($debutSeconde,$finSeconde);
-			//var_dump($height);
-			
-			$activite = convertCodeToNomActivite($occupation['CodeActivite'],$bdd);
-			if($height >= 5){
-				$s=$s.'<div class="celluleOccup" style="margin-left:'.$decale.'%;top:'.$top.'%;height:'.$height.'%;">';
-				$s=$s.$debut.'-';	
-				$s=$s.$fin.'<br>';	
-				//~ $s=$s.$height.'<br>';	
-				$s=$s.$activite ;	
-				$s=$s.'</div>';
-			}
-			else{
-				$s=$s.'<div class="celluleOccup" style="margin-left:'.$decale.'%;top:'.$top.'%;height:'.$height.'%;">';
-				//~ $s=$s.$height.'<br>';	
-				$s=$s.$activite ;	
-				$s=$s.'</div>';
-			}
-				
+			echo '<div class="calendar_event" id="'.$occupation['CodeOccupation'].'"style="'.generateStyle($occupation).'">
+				<div class="calendar_event_date" id="'.$occupation['CodeOccupation'].'_date" >
+					<span id="'.$occupation['CodeOccupation'].'_date_debut_heure">'.retournerHeureDebut($occupation).'</span>:
+					<span id="'.$occupation['CodeOccupation'].'_date_debut_minute">'.retournerMinuteDebut($occupation).'</span> -
+					<span id="'.$occupation['CodeOccupation'].'_date_fin_heure">'.retournerHeureFin($occupation).'</span>:
+					<span id="'.$occupation['CodeOccupation'].'_date_fin_minute">'.retournerMinuteFin($occupation).'</span>
+				</div>
+				<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
+				<div class="calendar_event_lieu" id="'.$occupation['CodeOccupation'].'_lieu">'.convertCodeToNomLieu($occupation['CodeLieux'],$bdd).'</div>
+				<div class="calendar_event_compagnie" id="'.$occupation['CodeOccupation'].'_compagnie">'.convertCodeToNomCompagnie($occupation['CodeCompagnie'],$bdd).'</div>
+				<div class="calendar_event_dispositif" id="'.$occupation['CodeOccupation'].'_dispositif">'.convertCodeToNomDispositif($occupation['CodeDispositif'],$bdd).'</div>
+			</div>';	
 		}
-		return $s;
-	}
-	
-	
-	//~ function afficheColone($codeCandidat,$date,$day,$bdd){
-		//~ $table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
-		//~ if(isset($table)){
-			//~ return '<center><div>'.RetournerOccupations($table,$bdd).'</div><button class="fancybox-a">+</button></center>';
-		//~ }
-		//~ else
-		//~ return '<center><a href="javascript:;" class="fancybox-a"><button>+</button></a></center>';
-	//~ }
-	
-	function afficheColone($codeCandidat,$date,$day,$bdd,$decale){
-		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
-		if(isset($table)){
-			return afficheOccupations($table,$bdd,$decale);
-		}
-		else
-		return '<center><a href="javascript:;" class="fancybox-a"><button>+</button></a></center>';
-	}
-	
-		
-	function print_table($weekaffichage,$weekquery,$id,$bdd){
-		$codeCandidat = renvoyerCodeCandidatfromCodetilisateur($id,$bdd);
-		echo '<div class="days">';
-		foreach($weekaffichage as $key => $value){ //Affiche entete
-			echo '<div class="coloneOccupTitle"><center>'.$value.'</center></div>';
-		}
-		echo '</div class="occupationContent">';
-		$cpt = 0;
-		foreach($weekquery as $key => $value){
-			$decale = $cpt * 14.28;
-			echo afficheColone($codeCandidat,$value,$key,$bdd,$decale);
-			$cpt++;
-		}
-		echo'</div>';
 	}
 	
 	?>

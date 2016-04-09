@@ -82,6 +82,11 @@
                                 <div class='info_horaires_content'>22h00</div>
                                 <div class='info_horaires_content'>23h00</div>                                    
                             </td>
+                            <?php
+								//var_dump($_SESSION);
+								print_table($queryWeek,$_SESSION['id'],$bdd);
+                            ?>
+<!--
                             <td valign="top" class="other_day calendar_td" id="Lu">
 							
 								<div class="calendar_event" id="16" style="height:260px; margin-top:180px;">
@@ -91,7 +96,7 @@
                                         <span id="16_date_fin_heure">11</span>:
                                         <span id="16_date_fin_minute">00</span>
                                     </div>
-                                    <div class="calendar_event_title" id="16_title">toto</div>
+                                    <div class="calendar_event_activite" id="17_title">toto</div>
                                     <div class="calendar_event_lieu" id="16_lieu" style="display:none;">(Inconnu)</div>
                                 </div>
 								
@@ -102,6 +107,7 @@
                             <td valign="top" class="other_day calendar_td" id="Ve"> </td>
 							<td valign="top" class="other_day calendar_td" id="Sa"> </td>
                             <td valign="top" class="other_day calendar_td" id="Di"> </td>
+-->
                         </tr>
                     </tbody>
                 </table>

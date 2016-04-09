@@ -57,7 +57,7 @@ function SemaineCourante ($SemaineCourante,$Semaine) {
 		echo $text.' '.date ("Y") ;
 	}
 	
-	function get_date_lundi_to_Sunday_from_week ($week,$year,$format="d/m/Y") {
+	function get_date_lundi_to_Sunday_from_week ($week,$year,$affichage,$format="d/m/Y") {
 		//renvoie un tableau des jours de la semaine et des dates associées en fonction du
 		//numero de semaine et de l'année.
 		$firstDayInYear = date ("N",mktime(0,0,0,1,1,$year)) ;
@@ -76,15 +76,33 @@ function SemaineCourante ($SemaineCourante,$Semaine) {
 		$timestamp_vendredi = mktime (0,0,0,1,5,$year) + $weekInSeconds + $shift ;
 		$timestamp_samedi = mktime (0,0,0,1,6,$year) + $weekInSeconds + $shift ;
 		$timestamp_dimanche = mktime (0,0,0,1,7,$year) + $weekInSeconds + $shift ;
-
-		return array ("Lundi " . date($format,$timestamp_lundi),
-					"Mardi " . date($format,$timestamp_mardi),
-					"Mercredi " . date($format,$timestamp_mercredi),
-					"Jeudi " . date($format,$timestamp_jeudi),
-					"Vendredi " . date($format,$timestamp_vendredi),
-					"Samedi " . date($format,$timestamp_samedi),
-					"Dimanche ".date($format,$timestamp_dimanche)		
-		) ;
+		
+		if($affichage == 0){
+			return array ("Lu. " . date($format,$timestamp_lundi),
+						"Ma. " . date($format,$timestamp_mardi),
+						"Me. " . date($format,$timestamp_mercredi),
+						"Je. " . date($format,$timestamp_jeudi),
+						"Ve. " . date($format,$timestamp_vendredi),
+						"Sa. " . date($format,$timestamp_samedi),
+						"Di. ".date($format,$timestamp_dimanche)		
+			) ;
+		}
+		else
+			return array ("Lundi " . date($format,$timestamp_lundi),
+						"Mardi " . date($format,$timestamp_mardi),
+						"Mercredi " . date($format,$timestamp_mercredi),
+						"Jeudi " . date($format,$timestamp_jeudi),
+						"Vendredi " . date($format,$timestamp_vendredi),
+						"Samedi " . date($format,$timestamp_samedi),
+						"Dimanche ".date($format,$timestamp_dimanche)		
+			) ;
+	}
+	
+	function remplirEnteteCalendar($week){
+		$dates = get_date_lundi_to_Sunday_from_week($week,date("Y"),0);
+		for($i=0;$i<7;$i++){
+			echo '<th><a  href="">'.$dates[$i].'</a></th>';
+		}	
 	}
 	
 	function get_date_lundi_to_Sunday_from_week_for_query ($week,$year,$format="Y-m-d") {
@@ -124,28 +142,29 @@ function SemaineCourante ($SemaineCourante,$Semaine) {
 	function ConvertNumSemaineToDateDebEtFin($W,$Y)
 	{
 		//renvoie la date de début et fin de semaine en fonction du numéro de semaine et de l'année.
-		$debut_fin_semaine = get_date_lundi_to_Sunday_from_week($W,$Y);
+		$debut_fin_semaine = get_date_lundi_to_Sunday_from_week($W,$Y,1);
 		return "Semaine du ".$debut_fin_semaine[0] . " au " . $debut_fin_semaine [6];
 	}
 
 	function genererChoixSemaine($W,$Y)
 	{
 		//propose toutes les semaines du début de l'année a la semaine courante
-		echo'<center><form action="candidatActivites.ctrl.php" method="POST">
+		$s ='<form action="candidatActivites.ctrl.php" method="POST">
 		<fieldset>
 		<SELECT name="semaine" onchange="this.form.submit()">';
 		for($i=1;$i<=date("W");$i++)
 		{
 			if($i==$W)
 			{
-				echo'<OPTION value="'.$i.'" selected><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
+				$s=$s.'<OPTION value="'.$i.'" selected><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
 			}
 			else
-				echo'<OPTION value="'.$i.'" ><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
+				$s=$s.'<OPTION value="'.$i.'" ><center>'.ConvertNumSemaineToDateDebEtFin($i,$Y).'</center></OPTION>';
 		}
-		echo'</SELECT>
+		$s=$s.'</SELECT>
 		</fieldset>
-		</form></center>';
+		</form>';
+		return $s;
 	}
 
 

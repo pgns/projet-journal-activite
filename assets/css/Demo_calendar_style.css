@@ -46,6 +46,7 @@ a:hover.info span {
 
 #calendrier{
     border: 1px solid #B9BEBD;
+    margin-top: 2%;
 }
 span.semaine_en_cours{
     font-weight:bold;
@@ -211,6 +212,7 @@ div#visu_event_contenu label{
 div#switcher_agenda_options{
     display:block;
     height:25px;
+
 }
 div#choix_plage_horaire{
     float:left;

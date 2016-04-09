@@ -14,7 +14,7 @@
 	require_once('../includes/fonctions.affichage.activite.php');
 	
 	$Week = SemaineCourante ((date("W")), $Semaine) ;
-	$currentWeek = get_date_lundi_to_Sunday_from_week($Week,date("Y"));
+	$currentWeek = get_date_lundi_to_Sunday_from_week($Week,date("Y"),1);
 	$queryWeek = get_date_lundi_to_Sunday_from_week_for_query($Week,date("Y"));
 	
 

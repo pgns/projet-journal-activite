@@ -2,8 +2,12 @@
 	<div id="content">
             <div id="gen_new_content" title="Nouvel événement">
                 <form action="">
-                    <label class="label_evenement" for="new_event_title">Objet : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" /><br />
-                    <label class="label_evenement" for="new_event_lieu">Lieu : </label><input type="text" class="lab" name="new_event_lieu" id="new_event_lieu" />
+                    <label class="label_evenement" for="new_event_title">Categorie Activitée : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" /><br />
+                    <label class="label_evenement" for="new_event_title">Activitée : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" /><br />
+                    <label class="label_evenement" for="new_event_title">Categorie Lieu : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" /><br />
+					<label class="label_evenement" for="new_event_lieu">Lieu : </label><input type="text" class="lab" name="new_event_lieu" id="new_event_lieu" /><br />
+                    <label class="label_evenement" for="new_event_title">Compagnie : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" /><br />
+                    <label class="label_evenement" for="new_event_title">Dispositif : </label><input type="text" class="lab" name="new_event_title" id="new_event_title" />
                 </form>
             </div>
 

@@ -21,9 +21,6 @@ $(function(){
 
     }
 
-
-
-
     /*########################################################################################*/
     /*###########################              MODULE AGENDA                     #############*/
     /*########################################################################################*/
@@ -151,7 +148,7 @@ $(function(){
 
     /*nouvel event*/
     $(".calendar_td").dblclick(function(e){
-        $("#ajax_load").html('<p align="center"><img src="'+getBaseURL()+'/public/themes/admin/img/loading.gif" /></p>');
+        //$("#ajax_load").html('<p align="center"><img src="'+getBaseURL()+'/public/themes/admin/img/loading.gif" /></p>');
         var agenda_first_id=0;
         var position_choisie=e.pageY-$(this).position().top;
 
@@ -200,15 +197,24 @@ $(function(){
             modal: true,
             beforeclose: function(event, ui) {
                 $(this).dialog('destroy');
-                $("#new_event_title").val("");
+                $("#new_event_activite").val("");
+                $("#new_event_categorieActivite").val("");  //Note il faudra surement ici inclure les valeurs
+                $("#new_event_categorieLieu").val("");
                 $("#new_event_lieu").val("");
+                $("#new_event_compagnie").val("");
+                $("#new_event_dispositif").val("");
             },
             buttons: {
                 'Enregistrer': function() {
                     $(this).dialog('destroy');
-                    var new_titre=$("#new_event_title").val();
-                    var new_lieu=$("#new_event_lieu").val();
+                    var new_activite=$("#new_event_activite").val();
+                    var new_categorieActivite=$("#new_event_categorieActivite").val();
+                    var new_categorieLieu=$("#new_event_categorieLieu").val();
+                    var new_compagnie=$("#new_event_compagnie").val();
+                    var new_dispositif=$("#new_event_dispositif").val();
+                    
                     agenda_id=$("#agenda_id").val();
+                    
                     if(new_titre!=""){
                         $("#"+event_id+'_title').html(new_titre);
                     }
@@ -222,8 +228,12 @@ $(function(){
                     $("#"+event_id).addClass(class_color_agenda);
 //                    $("#ajax_load").load(getBaseURL()+"/admin/ajax/specifyevent/id/"+event_id+"/titre/"+new_ti+"/lieu/"+new_li+"/ag/"+agenda_id);
 $("#ajax_load").html("Evenement cr&eacute&eacute..");
-                    $("#new_event_title").val("");
-                    $("#new_event_lieu").val("");
+                    $("#new_event_activite").val("");
+					$("#new_event_categorieActivite").val("");  
+					$("#new_event_categorieLieu").val("");
+					$("#new_event_lieu").val("");
+					$("#new_event_compagnie").val("");
+					$("#new_event_dispositif").val("");
                 },
                 'Annuler': function() {
                     $(this).dialog('destroy');
@@ -235,6 +245,12 @@ $("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;
                     },1000);
                     $("#new_event_title").val("");
                     $("#new_event_lieu").val("");
+                    $("#new_event_activite").val("");
+					$("#new_event_categorieActivite").val("");  
+					$("#new_event_categorieLieu").val("");
+					$("#new_event_lieu").val("");
+					$("#new_event_compagnie").val("");
+					$("#new_event_dispositif").val("");
                 }
                 
             }

@@ -8,16 +8,16 @@
 	require '../class/lieu.class.php';
 	require '../class/categorieActivite.class.php';
 	require '../class/categorieLieu.class.php';
-	// require '../class/compagnie.class.php';
-	// require '../class/dispositif.class.php';
+	require '../class/compagnie.class.php';
+	require '../class/dispositif.class.php';
 	
 	// Modele requis
 	require '../modele/activite.modele.php';
 	require '../modele/lieux.modele.php';
 	require '../modele/categorieActivite.modele.php';
 	require '../modele/categorieLieu.modele.php';
-	// require '../modele/compagnie.modele.php';
-	// require '../modele/dispositif.modele.php';
+	require '../modele/compagnie.modele.php';
+	require '../modele/dispositif.modele.php';
 	
 	$SemaineCourante = date("W");
 	if(isset($_POST['semaine']))
@@ -40,7 +40,7 @@
 	$liste_CategorieLieu = get_CategorieLieu($bdd);
 	$liste_LieuDefault = get_Lieux($bdd,1);		
 	// $liste_compagnie = get_Compagnie($bdd);
-	// $liste_dispositif = get_dispositif($bdd);
+	$liste_dispositif = get_dispositif($bdd);
 
 	require_once('../includes/head.candidat.php');
 	require_once('../vue/candidatActivites.vue.php');

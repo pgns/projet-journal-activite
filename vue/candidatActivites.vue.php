@@ -36,10 +36,20 @@
 					</select><br />
                     
                     <label class="label_evenement" for="new_event_compagnie">			Compagnie :</label>
-                    <input type="text" class="lab" name="new_event_compagnie" id="new_event_compagnie" /><br />
-                   
+                    <select type="text" class="lab" name="new_event_compagnie" id="new_event_compagnie">
+						<option id="0"> - - - - - </option>
+					</select><br />
+						
                     <label class="label_evenement" for="new_event_dispositif">			Dispositif :</label>
-                    <input type="text" class="lab" name="new_event_dispositif" id="new_event_dispositif" />
+                    <select type="text" class="lab" name="new_event_dispositif" id="new_event_dispositif">
+							<?php
+								foreach($liste_dispositif as $id => $object){
+									echo'<option id="'.$object->CodeDispositif.'">'.$object->NomDispositif.'</option>';}
+							?>
+					</select>
+					
+					
+					
                 </form>
             </div>
 

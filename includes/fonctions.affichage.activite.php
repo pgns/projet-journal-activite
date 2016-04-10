@@ -28,13 +28,30 @@
 	function afficheColone($codeCandidat,$date,$day,$bdd){
 		$table = renvoyerToutesOccupationDunCandidatALaDate($codeCandidat,$date,$bdd);
 		if(isset($table)){
-			return afficheOccupations($table,$bdd);
+			return retournerOccupations($table,$bdd);
 		}
 		else
 		return '';
 	}
 	
+	
+	function retournerDureeSeconde($occupation){
+		$hours = convertDateTimeToHours($occupation['HeureDebut']);
+		$data = explode(':',$hours);
+		
+		$depSec = $data[0]*60*60 + $data[1]*60;
+		
+		$hoursf = convertDateTimeToHours($occupation['HeureFin']);
+		$dataf = explode(':',$hoursf);
+		
+		$finSec = $dataf[0]*60*60 + $dataf[1]*60;
+		$dureeSec = $finSec - $depSec;
+		
+		return $dureeSec;
+	}
+	
 	function generateStyle($occupation){
+		
 		$hours = convertDateTimeToHours($occupation['HeureDebut']);
 		$data = explode(':',$hours);
 		
@@ -113,21 +130,47 @@
 		return $data['NomDispositif'];
 	}
 	
-	function afficheOccupations($table,$bdd){
+	function retournerOccupations($table,$bdd){
+		$string = '';
 		foreach($table as $occupation){
-			echo '<div class="calendar_event" id="'.$occupation['CodeOccupation'].'"style="'.generateStyle($occupation).'">
+			$Ds = retournerDureeSeconde($occupation);
+			$Dm = $Ds / 60;
+			$string = $string. '<div class="calendar_event" id="'.$occupation['CodeOccupation'].'"style="'.generateStyle($occupation).'">
 				<div class="calendar_event_date" id="'.$occupation['CodeOccupation'].'_date" >
 					<span id="'.$occupation['CodeOccupation'].'_date_debut_heure">'.retournerHeureDebut($occupation).'</span>:
 					<span id="'.$occupation['CodeOccupation'].'_date_debut_minute">'.retournerMinuteDebut($occupation).'</span> -
 					<span id="'.$occupation['CodeOccupation'].'_date_fin_heure">'.retournerHeureFin($occupation).'</span>:
 					<span id="'.$occupation['CodeOccupation'].'_date_fin_minute">'.retournerMinuteFin($occupation).'</span>
-				</div>
-				<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
+				</div>';
+			
+			if($Dm <= 60){
+				$string = $string.'</div>';
+			}
+			else if($Dm > 60 && $Dm <= 100){
+				$string = $string.'<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
+				</div>';
+			}
+			else if($Dm > 100 && $Dm <= 140){
+				$string = $string.'<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
+				<div class="calendar_event_lieu" id="'.$occupation['CodeOccupation'].'_lieu">'.convertCodeToNomLieu($occupation['CodeLieux'],$bdd).'</div>
+				</div>';
+			}
+			else if($Dm > 140 && $Dm <= 180){
+				$string = $string.'<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
+				<div class="calendar_event_lieu" id="'.$occupation['CodeOccupation'].'_lieu">'.convertCodeToNomLieu($occupation['CodeLieux'],$bdd).'</div>
+				<div class="calendar_event_compagnie" id="'.$occupation['CodeOccupation'].'_compagnie">'.convertCodeToNomCompagnie($occupation['CodeCompagnie'],$bdd).'</div>
+				</div>';
+			}
+			else{
+				$string = $string.'<div class="calendar_event_activite" id="'.$occupation['CodeOccupation'].'_activite">'.convertCodeToNomActivite($occupation['CodeActivite'],$bdd).'</div>
 				<div class="calendar_event_lieu" id="'.$occupation['CodeOccupation'].'_lieu">'.convertCodeToNomLieu($occupation['CodeLieux'],$bdd).'</div>
 				<div class="calendar_event_compagnie" id="'.$occupation['CodeOccupation'].'_compagnie">'.convertCodeToNomCompagnie($occupation['CodeCompagnie'],$bdd).'</div>
 				<div class="calendar_event_dispositif" id="'.$occupation['CodeOccupation'].'_dispositif">'.convertCodeToNomDispositif($occupation['CodeDispositif'],$bdd).'</div>
-			</div>';	
+				</div>';
+				
+			}	
 		}
+		return $string;
 	}
 	
 	?>

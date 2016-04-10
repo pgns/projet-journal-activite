@@ -134,7 +134,7 @@ td.info_horaires{
     text-align:center;
 }
 div.info_horaires_content{
-    height:40px;
+    height:39px;
     /* 39px + 1px de border = 40px
        soit 4 fois la taille d'1/4 d'heure
     */

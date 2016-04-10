@@ -31,7 +31,7 @@
 			return afficheOccupations($table,$bdd);
 		}
 		else
-			return '';
+		return '';
 	}
 	
 	function generateStyle($occupation){

@@ -5,17 +5,17 @@
 
 	// Classes requise
 	require '../class/activite.class.php';
-	// require '../class/lieu.class.php';
+	require '../class/lieu.class.php';
 	require '../class/categorieActivite.class.php';
-	// require '../class/categorieLieu.class.php';
+	require '../class/categorieLieu.class.php';
 	// require '../class/compagnie.class.php';
 	// require '../class/dispositif.class.php';
 	
 	// Modele requis
 	require '../modele/activite.modele.php';
-	// require '../modele/lieux.modele.php';
+	require '../modele/lieux.modele.php';
 	require '../modele/categorieActivite.modele.php';
-	// require '../modele/categorieLieu.modele.php';
+	require '../modele/categorieLieu.modele.php';
 	// require '../modele/compagnie.modele.php';
 	// require '../modele/dispositif.modele.php';
 	
@@ -37,8 +37,8 @@
 
 	$liste_CategorieActivite = get_CategorieActivite($bdd);
 	$liste_ActiviteDefault = get_Activites($bdd,1);
-	// $liste_CategorieLieu = get_CategorieLieu($bdd);
-	// $liste_LieuDefault = get_Lieux($bdd,1);		
+	$liste_CategorieLieu = get_CategorieLieu($bdd);
+	$liste_LieuDefault = get_Lieux($bdd,1);		
 	// $liste_compagnie = get_Compagnie($bdd);
 	// $liste_dispositif = get_dispositif($bdd);
 

@@ -19,11 +19,21 @@
 					
 					
 					
-                    <label class="label_evenement .RA_target" for="new_event_categorieLieu">		Categorie Lieu :</label>
-                   <input type="text" class="lab" name="new_event_categorieLieu" id="new_event_title" /><br />
+                    <label class="label_evenement" for="new_event_categorieLieu">		Categorie Lieu :</label>
+					<select type="text" class="lab RA_target" name="new_event_categorieLieu" id="new_event_categorieLieu" >
+							<?php 
+								foreach($liste_CategorieLieu as $id => $object){
+									echo'<option id="'.$object->CodeCategorieLieux.'">'.$object->NomCategorie.'</option>';}
+							?>
+					</select><br />
 					
 					<label class="label_evenement" for="new_event_lieu">				Lieu :</label>
-					<input type="text" class="lab" name="new_event_lieu" id="new_event_lieu" /><br />
+					<select type="text" class="lab RA_Lieu" name="new_event_lieu" id="new_event_lieu">
+							<?php
+								foreach($liste_LieuDefault as $id => $object){
+									echo'<option id="'.$object->CodeLieux.'">'.$object->NomLieux.'</option>';}
+							?>
+					</select><br />
                     
                     <label class="label_evenement" for="new_event_compagnie">			Compagnie :</label>
                     <input type="text" class="lab" name="new_event_compagnie" id="new_event_compagnie" /><br />

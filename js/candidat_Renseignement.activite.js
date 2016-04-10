@@ -6,7 +6,7 @@ $(function() {
 		console.log("cat : "+categorie);
 		console.log("cde : "+codeCategorie);
 		if(categorie == "new_event_categorieActivite"){targetCategorie = "RA_activ"; cat = "activite";}
-		// if(categorie == ""){targetCategorie = "new_event_activite"; cat = "activite";}
+		if(categorie == "new_event_categorieLieu"){targetCategorie = "RA_Lieu"; cat = "lieu";}
 		$.ajax({
 			url: "../fonctions/retourneCategorie.php",
 			type : 'POST',

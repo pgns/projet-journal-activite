@@ -3,8 +3,12 @@
             <div id="gen_new_content" title="Nouvel événement">
                 <form action="">
                     <label class="label_evenement" for="new_event_categorieActivite">	Categorie Activitée :</label>
-                    <input type="text" class="lab" name="new_event_categorieActivite" id="new_event_categorieActivite" /><br />
-                   
+                    <select type="text" class="lab" name="new_event_categorieActivite" id="new_event_categorieActivite">
+							<?php foreach($liste_CategorieActivite as $id => $object){
+									echo'<option id="'.$object->CodeCategorieActivite.'">'.$object->NomCategorie.'</option>';}
+							?>
+					</select><br />
+					
                     <label class="label_evenement" for="new_event_activite">			Activitée :</label>
                     <input type="text" class="lab" name="new_event_activite" id="new_event_activite" /><br />
                     

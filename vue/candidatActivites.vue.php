@@ -3,16 +3,23 @@
             <div id="gen_new_content" title="Nouvel événement">
                 <form action="">
                     <label class="label_evenement" for="new_event_categorieActivite">	Categorie Activitée :</label>
-                    <select type="text" class="lab" name="new_event_categorieActivite" id="new_event_categorieActivite">
+                    <select type="text" class="lab RA_target" name="new_event_categorieActivite" id="new_event_categorieActivite">
 							<?php foreach($liste_CategorieActivite as $id => $object){
 									echo'<option id="'.$object->CodeCategorieActivite.'">'.$object->NomCategorie.'</option>';}
 							?>
 					</select><br />
 					
                     <label class="label_evenement" for="new_event_activite">			Activitée :</label>
-                    <input type="text" class="lab" name="new_event_activite" id="new_event_activite" /><br />
-                    
-                    <label class="label_evenement" for="new_event_categorieLieu">		Categorie Lieu :</label>
+                    <select type="text" class="lab RA_activ" name="new_event_activite" id="new_event_activite" >
+							<?php foreach($liste_ActiviteDefault as $id => $object){
+									echo'<option id="'.$object->CodeActivite.'">'.$object->NomActivite.'</option>';}
+							?>
+					</select><br />
+					
+					
+					
+					
+                    <label class="label_evenement .RA_target" for="new_event_categorieLieu">		Categorie Lieu :</label>
                    <input type="text" class="lab" name="new_event_categorieLieu" id="new_event_title" /><br />
 					
 					<label class="label_evenement" for="new_event_lieu">				Lieu :</label>

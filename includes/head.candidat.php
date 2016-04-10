@@ -12,7 +12,7 @@
         <script type="text/javascript" src="../js/jquery-ui-1.7.2.custom.min.js"></script>
         <script type="text/javascript" src="../js/Demo_calendar_script.js"></script>
         <script type="text/javascript" src="../js/jquery.corner.js"></script>
-		
+		<script type="text/javascript" src="../js/candidat_Renseignement.activite.js"></script>
 		<!-- Add jQuery library -->
 <!--
 		<script type="text/javascript" src="../js/fancybox/lib/jquery-1.10.1.min.js"></script>

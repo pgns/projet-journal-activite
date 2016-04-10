@@ -147,7 +147,8 @@
 						.css('-webkit-tap-highlight-color', 'rgba(0,0,0,0)');
 
 					$this
-						.on('click', 'a', function(event) {
+						//.on('click', 'a', function(event) {
+						.click('a', function(event) {
 
 							var $a = $(this),
 								href = $a.attr('href'),
@@ -178,14 +179,14 @@
 				}
 
 			// Event: Touch stuff.
-				$this.on('touchstart', function(event) {
+				$this.bind('touchstart', function(event) {
 
 					$this.touchPosX = event.originalEvent.touches[0].pageX;
 					$this.touchPosY = event.originalEvent.touches[0].pageY;
 
 				})
 
-				$this.on('touchmove', function(event) {
+				$this.bind('touchmove', function(event) {
 
 					if ($this.touchPosX === null
 					||	$this.touchPosY === null)
@@ -250,12 +251,12 @@
 				});
 
 			// Event: Prevent certain events inside the panel from bubbling.
-				$this.on('click touchend touchstart touchmove', function(event) {
+				$this.click('touchend touchstart touchmove', function(event) {
 					event.stopPropagation();
 				});
 
 			// Event: Hide panel if a child anchor tag pointing to its ID is clicked.
-				$this.on('click', 'a[href="#' + id + '"]', function(event) {
+				$this.click('a[href="#' + id + '"]', function(event) {
 
 					event.preventDefault();
 					event.stopPropagation();
@@ -267,12 +268,12 @@
 		// Body.
 
 			// Event: Hide panel on body click/tap.
-				$body.on('click touchend', function(event) {
+				$body.click('touchend', function(event) {
 					$this._hide(event);
 				});
 
 			// Event: Toggle.
-				$body.on('click', 'a[href="#' + id + '"]', function(event) {
+				$body.click('a[href="#' + id + '"]', function(event) {
 
 					event.preventDefault();
 					event.stopPropagation();

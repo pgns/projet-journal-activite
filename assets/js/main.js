@@ -23,7 +23,8 @@
 		// Disable animations/transitions until the page has loaded.
 			$body.addClass('is-loading');
 
-			$window.on('load', function() {
+			//$window.on('load', function() {
+			$window.load( function() {
 				$body.removeClass('is-loading');
 			});
 
@@ -44,13 +45,13 @@
 				var $sc = $('#sidebar, #content'), tid;
 
 				$window
-					.on('resize', function() {
+					.resize(function() {
 						window.clearTimeout(tid);
 						tid = window.setTimeout(function() {
 							$sc.css('min-height', $document.height());
 						}, 100);
 					})
-					.on('load', function() {
+					.load(function() {
 						$window.trigger('resize');
 					})
 					.trigger('resize');

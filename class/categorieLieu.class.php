@@ -2,7 +2,7 @@
 	class CategorieLieu{
 		public function __construct(array $CategorieLieu)
 		{
-			if(!empty(CategorieLieu))
+			if(!empty($CategorieLieu))
 				$this->hydrate($CategorieLieu);
 		}
 		public function hydrate(array $donnees)

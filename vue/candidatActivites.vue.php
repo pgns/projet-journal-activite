@@ -1,4 +1,6 @@
-<!-- Content -->
+<!--
+Content 
+-->
 	<div id="content">
             <div id="gen_new_content" title="Nouvel événement">
                 <form action="">
@@ -15,9 +17,6 @@
 									echo'<option id="'.$object->CodeActivite.'">'.$object->NomActivite.'</option>';}
 							?>
 					</select><br />
-					
-					
-					
 					
                     <label class="label_evenement .RA_target" for="new_event_categorieLieu">		Categorie Lieu :</label>
                    <input type="text" class="lab" name="new_event_categorieLieu" id="new_event_title" /><br />
@@ -41,20 +40,9 @@
             <div id="create_event"></div>
             <div id="ajax_load" class="info_activation_module"></div>
             <div id="dialog" title="Suppression">Veuillez confirmer la suppression</div>
-<!--
-            <div id="switcher_agenda_options">
-                <div id="choix_plage_horaire">
 
-                    <a class="info" href=""><img src="../img/bef_week.png" alt="before" /><span>04/01/2010 au 10/01/2010</span></a>
-                    <a class="info" href=""><img src="../img/next_week.png" alt="next" /><span>18/01/2010 au 24/01/2010</span></a>
-                    <span class="semaine_en_cours"><?php //echo 'Semaine du '.$currentWeek[0].' au '.$currentWeek[6];?></span>
-
-                    <span class="semaine_en_cours"></span>
-					<?//php echo genererChoixSemaine($currentWeek,date("Y"));?>
-                </div>
-            </div>
--->
             <?php echo genererChoixSemaine($Week,date("Y"));?>
+            
             <div id="calendrier">
                 <table id="calendar_table">
                     <thead>
@@ -97,28 +85,7 @@
 								//var_dump($_SESSION);
 								print_table($queryWeek,$_SESSION['id'],$bdd);
                             ?>
-<!--
-                            <td valign="top" class="other_day calendar_td" id="Lu">
-							
-								<div class="calendar_event" id="16" style="height:260px; margin-top:180px;">
-                                    <div class="calendar_event_date" id="16_date" >
-                                        <span id="16_date_debut_heure">04</span>:
-                                        <span id="16_date_debut_minute">30</span> -
-                                        <span id="16_date_fin_heure">11</span>:
-                                        <span id="16_date_fin_minute">00</span>
-                                    </div>
-                                    <div class="calendar_event_activite" id="17_title">toto</div>
-                                    <div class="calendar_event_lieu" id="16_lieu" style="display:none;">(Inconnu)</div>
-                                </div>
-								
-							</td>
-                            <td valign="top" class="other_day calendar_td" id="Ma"> </td>
-                            <td valign="top" class="other_day calendar_td" id="Me"> </td>
-                            <td valign="top" class="other_day calendar_td" id="Je"> </td>
-                            <td valign="top" class="other_day calendar_td" id="Ve"> </td>
-							<td valign="top" class="other_day calendar_td" id="Sa"> </td>
-                            <td valign="top" class="other_day calendar_td" id="Di"> </td>
--->
+
                         </tr>
                     </tbody>
                 </table>

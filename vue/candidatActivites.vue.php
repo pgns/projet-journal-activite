@@ -16,9 +16,8 @@
 									echo'<option id="'.$object->CodeCategorieActivite.'">'.$object->NomCategorie.'</option>';}
 							?>
 					</select><br />
-					
-                    <label class="label_evenement" for="new_event_activite">			Activitée :</label>
-                    <select type="text" class="lab RA_activ" name="new_event_activite" id="new_event_activite" >
+					<label class="label_evenement" for="new_event_codeActivite">				Activitée :</label>
+					<select type="text" class="lab RA_activ" name="new_event_codeActivite" id="new_event_codeActivite">
 							<?php foreach($liste_ActiviteDefault as $id => $object){
 									echo'<option id="'.$object->CodeActivite.'">'.$object->NomActivite.'</option>';}
 							?>
@@ -52,9 +51,6 @@
 									echo'<option id="'.$object->CodeDispositif.'">'.$object->NomDispositif.'</option>';}
 							?>
 					</select>
-					
-
-					
                 </form>
             </div>
 

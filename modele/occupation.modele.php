@@ -10,7 +10,7 @@
 		}
 		$requete = substr($requete, 0, -1);
 		$requete = $requete.')';
-		
+		echo $requete;
 		$bdd->query($requete);
 	}
 ?>

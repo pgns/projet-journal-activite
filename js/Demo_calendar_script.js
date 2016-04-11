@@ -1,7 +1,9 @@
 $(function(){
-
-
-
+	$( ".RA_activ" ).change(function() {
+		var test = $(this).find("option:selected").attr('id');
+		console.log(test);
+	});
+	
     function getBaseURL() {
         var url = location.href;  // entire url including querystring - also: window.location.href;
         var baseURL = url.substring(0, url.indexOf('/admin', 14)); 
@@ -180,21 +182,22 @@ $(function(){
         var day_choose=(parseInt($(this).attr("id")));
         var day_start=day_choose + ( nouvelle_heure_depart.getHours() * 60 * 60 ) + ( nouvelle_heure_depart.getMinutes() * 60 );
         var day_end=day_choose + ( nouvelle_heure_fin.getHours() * 60 * 60 ) + ( nouvelle_heure_fin.getMinutes() * 60 );
-        
-                    $("#new_event_day").val( jour_deb);
+
                     
-                    var minute_debut = nouvelle_heure_depart.getMinutes();
-                    if(minute_debut < 10){minute_debut = "0"+minute_debut;}
-                    var heure_debut = nouvelle_heure_depart.getHours();
-                    if(heure_debut < 10){heure_debut = "0"+heure_debut;}
-                    var minute_fin = nouvelle_heure_fin.getMinutes();
-                    if(minute_fin < 10){minute_fin = "0"+minute_fin;}
-                    var heure_fin = nouvelle_heure_fin.getHours();
-                    if(heure_fin < 10){heure_fin = "0"+heure_fin;}
-                    
-                    $("#new_event_heure_debut").val( heure_debut+':'+minute_debut+':00');
-                    $("#new_event_heure_fin").val( heure_fin+':'+minute_fin+':00');
-                    
+		var minute_debut = nouvelle_heure_depart.getMinutes();
+		if(minute_debut < 10){minute_debut = "0"+minute_debut;}
+		var heure_debut = nouvelle_heure_depart.getHours();
+		if(heure_debut < 10){heure_debut = "0"+heure_debut;}
+		var minute_fin = nouvelle_heure_fin.getMinutes();
+		if(minute_fin < 10){minute_fin = "0"+minute_fin;}
+		var heure_fin = nouvelle_heure_fin.getHours();
+		if(heure_fin < 10){heure_fin = "0"+heure_fin;}
+        /*dialog de remplissage date*/          
+		$("#new_event_day").val( jour_deb);
+		$("#new_event_heure_debut").val( heure_debut+':'+minute_debut+':00');
+        $("#new_event_heure_fin").val( heure_fin+':'+minute_fin+':00');
+				
+				
         /*creation de l'event dans la bdd*/
         var url_create=getBaseURL()+"/admin/ajax/evenementcreation/ds/"+day_start+"/de/"+day_end+"/ag/"+agenda_first_id;
 /*        var event_id = $.ajax({
@@ -202,8 +205,7 @@ $(function(){
             async: false
         }).responseText; */
         var event_id=1;
-
-        /*dialog de remplissage*/
+        /*Initialisation - dialog de remplissage*/
         $("#gen_new_content").dialog({
             bgiframe: true,
             resizable: true,
@@ -212,55 +214,83 @@ $(function(){
             modal: true,
             beforeclose: function(event, ui) {
                 $(this).dialog('destroy');
-                $("#new_event_activite").val("");
                 $("#new_event_categorieActivite").val("");  //Note il faudra surement ici inclure les valeurs
                 $("#new_event_categorieLieu").val("");
                 $("#new_event_lieu").val("");
                 $("#new_event_compagnie").val("");
                 $("#new_event_dispositif").val("");
+				$("#new_event_codeActivite").val("");
             },
             buttons: {
                 'Enregistrer': function() {
+					// console.log($("#new_event_lieu").find("option:selected").attr('id'));
                     $(this).dialog('destroy');
-                    var new_activite=$("#new_event_activite").val();
-                    var new_categorieActivite=$("#new_event_categorieActivite").val();
-                    var new_categorieLieu=$("#new_event_categorieLieu").val();
-                    var new_compagnie=$("#new_event_compagnie").val();
-                    var new_dispositif=$("#new_event_dispositif").val();
-                    
-                    agenda_id=$("#agenda_id").val();
-                    
-                    if(new_titre!=""){
-                        $("#"+event_id+'_title').html(new_titre);
-                    }
-                    if(new_lieu!=""){
-                        $("#"+event_id+'_lieu').html(new_lieu);
-                    }
-                    new_ti=new_titre.replace(/ /gi,"&nbsp;");
-                    new_li=new_lieu.replace(/ /gi,"&nbsp;");
-                    $("#"+event_id).removeClass("select_agenda_red");
-                    class_color_agenda=$("#"+agenda_id+"_agenda_id").html();
-                    $("#"+event_id).addClass(class_color_agenda);
-//                    $("#ajax_load").load(getBaseURL()+"/admin/ajax/specifyevent/id/"+event_id+"/titre/"+new_ti+"/lieu/"+new_li+"/ag/"+agenda_id);
-$("#ajax_load").html("Evenement cr&eacute&eacute..");
-                    $("#new_event_activite").val("");
+					
+					//recolte des champs du formulaire
+                    var new_activit=$("#new_event_codeActivite").find("option:selected").attr('id');
+					var new_lieu=$("#new_event_lieu").find("option:selected").attr('id');
+                    var new_compagnie=$("#new_event_compagnie").find("option:selected").attr('id');
+                    var new_dispositif=$("#new_event_dispositif").find("option:selected").attr('id');
+                    var new_event_heure_debut=jour_deb+" "+$("#new_event_heure_debut").val();
+					var new_event_heure_fin=jour_deb+" "+$("#new_event_heure_fin").val();
+					
+					console.log(new_activit);
+					
+					// envoie a controleur/CandidatRenseigneActivites.ctrl.php pour ajout BDD
+					$.ajax({
+						url: "../controleur/CandidatRenseigneActivites.ctrl.php",
+						type : 'POST',
+						data : 	'HeureDebut=' + new_event_heure_debut + 
+								'&HeureFin=' + new_event_heure_fin  + 
+								'&CodeLieux=' + new_lieu  + 
+								'&CodeActivite=' + new_activit  + 
+								'&CodeCompagnie=' + new_compagnie  + 
+								'&CodeDispositif=' + new_dispositif,
+						dataType : 'html',
+						success : function(rep, statut){
+							// console.log("Ajout finis");
+							console.log(rep);				// affichage requete SQL
+						}
+					});
+					
+			// Modif pierre - je pense que ça vien de la demos ...
+                    // agenda_id=$("#agenda_id").val();
+                    // if(new_titre!=""){
+                        // $("#"+event_id+'_title').html(new_titre);
+                    // }
+                    // if(new_lieu!=""){
+                        // $("#"+event_id+'_lieu').html(new_lieu);
+                    // }
+                    // new_ti=new_titre.replace(/ /gi,"&nbsp;");
+                    // new_li=new_lieu.replace(/ /gi,"&nbsp;");
+                    // $("#"+event_id).removeClass("select_agenda_red");
+                    // class_color_agenda=$("#"+agenda_id+"_agenda_id").html();
+                    // $("#"+event_id).addClass(class_color_agenda);
+                    // $("#ajax_load").load(getBaseURL()+"/admin/ajax/specifyevent/id/"+event_id+"/titre/"+new_ti+"/lieu/"+new_li+"/ag/"+agenda_id);
+				
+					// $("#ajax_load").html("Evenement cr&eacute&eacute..");
+					// RAZ des champs du formulaire
 					$("#new_event_categorieActivite").val("");  
 					$("#new_event_categorieLieu").val("");
+					$("#new_event_codeActivite").val("");
 					$("#new_event_lieu").val("");
 					$("#new_event_compagnie").val("");
 					$("#new_event_dispositif").val("");
+					$("#new_event_heure_debut").val("");
+					$("#new_event_heure_fin").val("");
+					$("#new_event_day").val("");
                 },
                 'Annuler': function() {
                     $(this).dialog('destroy');
 //                    $("#ajax_load").load(getBaseURL()+"/admin/ajax/supprimerevent/id/"+event_id);
-$("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;e.");
+					$("#ajax_load").html("Cr&eacute;ation de l'&eacute;v&eacute;nement annul&eacute;e.");
                     $("#"+event_id).hide("highlight",{
                         direction: "vertical",
                         color: "#A60000"
                     },1000);
                     $("#new_event_title").val("");
                     $("#new_event_lieu").val("");
-                    $("#new_event_activite").val("");
+                    $("#new_event_codeActivite").val("");
 					$("#new_event_categorieActivite").val("");  
 					$("#new_event_categorieLieu").val("");
 					$("#new_event_lieu").val("");

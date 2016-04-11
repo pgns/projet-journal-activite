@@ -19,7 +19,7 @@
 	function print_table($weekquery,$id,$bdd){
 		$codeCandidat = renvoyerCodeCandidatfromCodetilisateur($id,$bdd);
 		foreach($weekquery as $key => $value){
-			echo '<td valign="top" class="other_day calendar_td">';
+			echo '<td valign="top" class="other_day calendar_td" id="'.$value.'">';
 			echo afficheColone($codeCandidat,$value,$key,$bdd);
 			echo'</td>';
 		}

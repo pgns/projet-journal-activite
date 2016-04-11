@@ -148,6 +148,8 @@ $(function(){
 
     /*nouvel event*/
     $(".calendar_td").dblclick(function(e){
+        var jour_deb = $(this).attr('id');
+
         //$("#ajax_load").html('<p align="center"><img src="'+getBaseURL()+'/public/themes/admin/img/loading.gif" /></p>');
         var agenda_first_id=0;
         var position_choisie=e.pageY-$(this).position().top;
@@ -178,8 +180,21 @@ $(function(){
         var day_choose=(parseInt($(this).attr("id")));
         var day_start=day_choose + ( nouvelle_heure_depart.getHours() * 60 * 60 ) + ( nouvelle_heure_depart.getMinutes() * 60 );
         var day_end=day_choose + ( nouvelle_heure_fin.getHours() * 60 * 60 ) + ( nouvelle_heure_fin.getMinutes() * 60 );
-
         
+                    $("#new_event_day").val( jour_deb);
+                    
+                    var minute_debut = nouvelle_heure_depart.getMinutes();
+                    if(minute_debut < 10){minute_debut = "0"+minute_debut;}
+                    var heure_debut = nouvelle_heure_depart.getHours();
+                    if(heure_debut < 10){heure_debut = "0"+heure_debut;}
+                    var minute_fin = nouvelle_heure_fin.getMinutes();
+                    if(minute_fin < 10){minute_fin = "0"+minute_fin;}
+                    var heure_fin = nouvelle_heure_fin.getHours();
+                    if(heure_fin < 10){heure_fin = "0"+heure_fin;}
+                    
+                    $("#new_event_heure_debut").val( heure_debut+':'+minute_debut+':00');
+                    $("#new_event_heure_fin").val( heure_fin+':'+minute_fin+':00');
+                    
         /*creation de l'event dans la bdd*/
         var url_create=getBaseURL()+"/admin/ajax/evenementcreation/ds/"+day_start+"/de/"+day_end+"/ag/"+agenda_first_id;
 /*        var event_id = $.ajax({

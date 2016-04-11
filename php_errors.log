@@ -1,0 +1,6 @@
+[11-Apr-2016 08:34:27 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000] [1045] Access denied for user 'GNS'@'localhost' (using password: YES)' in /home/ubuntu/workspace/projet-journal-activite/includes/connection_MYSQL.inc.php:9
+Stack trace:
+#0 /home/ubuntu/workspace/projet-journal-activite/includes/connection_MYSQL.inc.php(9): PDO->__construct('mysql:host=loca...', 'GNS', 'gns')
+#1 /home/ubuntu/workspace/projet-journal-activite/controleur/connection.ctrl.php(5): require('/home/ubuntu/wo...')
+#2 {main}
+  thrown in /home/ubuntu/workspace/projet-journal-activite/includes/connection_MYSQL.inc.php on line 9

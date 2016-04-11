@@ -2,6 +2,14 @@
 	<div id="content">
             <div id="gen_new_content" title="Nouvel événement">
                 <form action="">
+                    <input type="hidden" id="new_event_day"/>
+                    
+                    <label class="label_evenement" for="new_event_heure_debut">			Heure de début :</label>
+					<input type="text" id="new_event_heure_debut"/>
+					
+					<label class="label_evenement" for="new_event_heure_fin">			Heure de fin :</label>
+					<input type="text" id="new_event_heure_fin"/>
+                    
                     <label class="label_evenement" for="new_event_categorieActivite">	Categorie Activitée :</label>
                     <select type="text" class="lab RA_target" name="new_event_categorieActivite" id="new_event_categorieActivite">
 							<?php foreach($liste_CategorieActivite as $id => $object){
@@ -15,9 +23,6 @@
 									echo'<option id="'.$object->CodeActivite.'">'.$object->NomActivite.'</option>';}
 							?>
 					</select><br />
-					
-					
-					
 					
                     <label class="label_evenement" for="new_event_categorieLieu">		Categorie Lieu :</label>
 					<select type="text" class="lab RA_target" name="new_event_categorieLieu" id="new_event_categorieLieu" >
@@ -48,7 +53,7 @@
 							?>
 					</select>
 					
-					
+
 					
                 </form>
             </div>

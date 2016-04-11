@@ -179,14 +179,14 @@
 				}
 
 			// Event: Touch stuff.
-				$this.bind('touchstart click', function(event) {
+				$this.on('touchstart', function(event) {
 
 					$this.touchPosX = event.originalEvent.touches[0].pageX;
 					$this.touchPosY = event.originalEvent.touches[0].pageY;
 
 				})
 				
-				$this.bind('touchmove click', function(event) {
+				$this.on('touchmove', function(event) {
 
 					if ($this.touchPosX === null
 					||	$this.touchPosY === null)
@@ -251,12 +251,12 @@
 				});
 
 			// Event: Prevent certain events inside the panel from bubbling.
-				$this.bind('touchend touchstart touchmove click', function(event) {
+				$this.on('click touchend touchstart touchmove', function(event) {
 					event.stopPropagation();
 				});
 
 			// Event: Hide panel if a child anchor tag pointing to its ID is clicked.
-				$this.click('a[href="#' + id + '"]', function(event) {
+				$this.on('click','a[href="#' + id + '"]', function(event) {
 
 					event.preventDefault();
 					event.stopPropagation();
@@ -268,12 +268,12 @@
 		// Body.
 
 			// Event: Hide panel on body click/tap.
-				$body.bind('touchend click', function(event) {
+				$body.on('click touchend', function(event) {
 					$this._hide(event);
 				});
 
 			// Event: Toggle.
-				$body.click('a[href="#' + id + '"]', function(event) {
+				$body.on('click','a[href="#' + id + '"]', function(event) {
 
 					event.preventDefault();
 					event.stopPropagation();

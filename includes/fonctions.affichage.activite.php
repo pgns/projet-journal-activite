@@ -69,7 +69,7 @@
 		$margin_top = ((($depSec/60)/60)*4)*10;
 		$height = ((($dureeSec/60)/60)*4)*10;  
 		
-		return 'height:'.$height.'px; margin-top:'.$margin_top.'px;';      
+		return 'height:'.$height.'px; margin-top:'.$margin_top.'px; position:relative';      
 	}
 	
 	function convertHoursToSecond($hours){

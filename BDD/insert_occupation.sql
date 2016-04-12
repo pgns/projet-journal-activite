@@ -152,3 +152,32 @@ VALUES ('2016-04-10 20:00:00','2016-04-10 21:00:00',1,2,20,0,0);
 INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
 VALUES ('2016-04-10 22:30:00','2016-04-10 23:59:59',1,2,10,0,0);
 
+/**Candidat **/
+/** Samedi **/
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 00:00:00','2016-04-09 07:00:00',2,2,310,0,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 07:00:00','2016-04-09 07:30:00',2,1,360,1,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 07:30:00','2016-04-09 13:30:00',2,3,410,2,1);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 13:30:00','2016-04-09 21:00:00',2,4,222,3,2);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 21:00:00','2016-04-09 21:20:59',2,2,410,0,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-09 21:20:59','2016-04-09 23:59:59',2,2,225,2,3);
+/** Dimanche **/
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 00:00:00','2016-04-10 07:00:00',2,2,10,0,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 07:00:00','2016-04-10 07:30:00',2,1,222,1,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 07:30:00','2016-04-10 13:30:00',2,3,223,2,1);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 13:30:00','2016-04-10 21:00:00',2,4,222,3,2);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 21:00:00','2016-04-10 21:20:59',2,2,10,0,0);
+INSERT INTO `occupation`(`HeureDebut`, `HeureFin`, `CodeCandidat`, `CodeLieux`, `CodeActivite`, `CodeCompagnie`, `CodeDispositif`) 
+VALUES ('2016-04-10 21:20:59','2016-04-10 23:59:59',2,2,225,2,3);
+
+

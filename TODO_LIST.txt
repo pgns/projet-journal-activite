@@ -1,8 +1,0 @@
-TODO LISt
-
-Partie Candidat
-	Activite
-		Affichage
-			- Mettre en forme les activités (css)
-			- Classer les activités dans l'ordre suivant la date
-			- Varier taille et position des activité suivant durée (? a débatre)
